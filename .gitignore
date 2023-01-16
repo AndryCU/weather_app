@@ -42,3 +42,17 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+lib/features/feth_weather/data/models/geocoding/geo_coding_model.g.dart
+
+lib/features/current_weather/domain/entities/current_weather_entity.freezed.dart
+
+lib/features/current_weather/domain/entities/current_weather_entity.g.dart
+
+lib/features/current_weather/domain/entities/wind_model.freezed.dart
+
+lib/features/current_weather/domain/entities/wind_model.g.dart
+
+lib/features/feth_location/domain/entities/geocoding/geo_coding_entity.freezed.dart
+
+lib/features/feth_location/domain/entities/geocoding/geo_coding_entity.g.dart
