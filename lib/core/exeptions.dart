@@ -1,9 +1,9 @@
 class ApiError implements Exception {
   late final int code;
   ApiError(this.code);
-  get message => 'Ha ocurrido un error: $code';
+  get message => 'An error has occurred. Error code: $code';
 }
 
 class NoInternetException implements Exception {
-  String get message => "No hay conexion a internet";
+  String get message => "There is no Internet conection";
 }
