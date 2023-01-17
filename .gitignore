@@ -56,3 +56,20 @@ lib/features/current_weather/domain/entities/wind_model.g.dart
 lib/features/feth_location/domain/entities/geocoding/geo_coding_entity.freezed.dart
 
 lib/features/feth_location/domain/entities/geocoding/geo_coding_entity.g.dart
+
+lib/features/five_days_weather/domain/entities/next_days_weather_main.freezed.dart
+
+lib/features/five_days_weather/domain/entities/next_days_weather_main.g.dart
+
+lib/features/five_days_weather/domain/entities/sun_entity.g.dart
+
+lib/features/five_days_weather/domain/entities/sun_entity.freezed.dart
+
+lib/features/five_days_weather/domain/entities/weather_next_days_entity.g.dart
+
+lib/features/five_days_weather/domain/entities/weather_next_days_entity.freezed.dart
+
+lib/features/five_days_weather/domain/entities/temperature_entity.freezed.dart
+lib/features/five_days_weather/domain/entities/temperature_entity.g.dart
+lib/features/five_days_weather/domain/entities/weather_day_list.freezed.dart
+lib/features/five_days_weather/domain/entities/weather_day_list.g.dart
