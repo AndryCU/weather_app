@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/exeptions.dart';
@@ -19,6 +19,7 @@ class CurrentWeatherMain extends StatelessWidget {
     return Container(
       child: BlocBuilder<CurrentWeatherBloc, CurrentWeatherState>(
         builder: (context, state) {
+          final letter = context.read<UnitCubit>().state ? '°C' : '°F';
           if (state is CurrentWeatherInitialState) {
             return const Center(
               child: Text(
@@ -38,7 +39,6 @@ class CurrentWeatherMain extends StatelessWidget {
             );
           }
           if (state is CurrentWeatherLoadedState) {
-            final letter = context.read<UnitCubit>().state ? 'C' : 'F';
             return Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
@@ -62,7 +62,6 @@ class CurrentWeatherMain extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  //TODO pensar esta conversion
                                   Text(
                                     '${state.currentWeatherModel.main.temp} $letter',
                                     style: TextStyle(
@@ -84,11 +83,12 @@ class CurrentWeatherMain extends StatelessWidget {
                               ),
                             ),
                             ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.network(
-                                  'https://openweathermap.org/img/wn/${state.currentWeatherModel.weather.first.icon}@2x.png',
-                                  width: 80),
-                            ),
+                                borderRadius: BorderRadius.circular(12),
+                                child: CachedNetworkImage(
+                                  imageUrl:
+                                      'https://openweathermap.org/img/wn/${state.currentWeatherModel.weather.first.icon}@2x.png',
+                                  width: 80,
+                                )),
                           ],
                         ),
                       ],
@@ -146,10 +146,10 @@ class CurrentWeatherMain extends StatelessWidget {
   }
 
   String convertTemperatureToCelcius(BuildContext context, double temp) {
-    return '${((temp - 32) * 0.5556).toStringAsFixed(1)}°C';
+    return '${((temp - 32) * 0.5556).round()}°C';
   }
 
   String convertTemperatureToFarenhid(BuildContext context, double temp) {
-    return '${((temp * 1.8) + 32).toStringAsFixed(1)}°F';
+    return '${((temp * 1.8) + 32).toStringAsFixed(0)}°F';
   }
 }
