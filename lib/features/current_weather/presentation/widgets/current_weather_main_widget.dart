@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/current_weather/presentation/widgets/current_weather_variable_widget.dart';
 
+import '../../../../core/utils/temperature_converter.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
 import '../../domain/entities/current_weather_entity.dart';
 
@@ -41,7 +42,11 @@ class CurrentWeatherMain extends StatelessWidget {
                         BlocBuilder<UnitCubit, bool>(
                           builder: (context, state) {
                             return Text(
-                              '${currentWeatherModel.main.temp.round()} ${state ? '°C' : '°F'}',
+                              state
+                                  ? convertTemperatureToCelsius(
+                                      currentWeatherModel.main.temp)
+                                  : convertTemperatureToFahrenheit(
+                                      currentWeatherModel.main.temp),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: size.width * 0.15,
@@ -100,13 +105,5 @@ class CurrentWeatherMain extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String convertTemperatureToCelcius(BuildContext context, double temp) {
-    return '${((temp - 32) * 0.5556).round()}°C';
-  }
-
-  String convertTemperatureToFarenhid(BuildContext context, double temp) {
-    return '${((temp * 1.8) + 32).toStringAsFixed(0)}°F';
   }
 }

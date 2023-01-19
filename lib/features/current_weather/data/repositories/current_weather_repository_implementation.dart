@@ -27,7 +27,6 @@ class CurrentWeatherRepositoryImplementation extends CurrentWeatherRepository {
       'lat': '$lat',
       'lon': '$lon',
       'appid': openWeatherMapKey,
-      'units': unitValue == true ? 'metric' : 'imperial',
     };
     if (!(await CheckInternetConnection.checkIfHaveInternet())) {
       return Left(NoInternetException());

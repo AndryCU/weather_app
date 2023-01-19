@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/utils/extract_days_from_list.dart';
+import 'package:weather_app/core/utils/temperature_converter.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
@@ -14,15 +15,15 @@ class ExpandedListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final letter = context.read<UnitCubit>().state ? '°C' : '°F';
+    final unit = context.read<UnitCubit>().state;
     final results =
         CustomDaysUtil.getDaysSeparated(list: weatherByDaysMainEntity.list);
     return ListView.builder(
       reverse: context.watch<OrderCubit>().state,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemBuilder: (context, indexdia) {
-        final dayName = results.keys.toList()[indexdia];
+      itemBuilder: (context, indexDay) {
+        final dayName = results.keys.toList()[indexDay];
         return Card(
           child: ExpansionTile(
             title: Row(
@@ -50,10 +51,17 @@ class ExpandedListItem extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '${results[dayName]!.maxTemDay.round()}$letter',
+                  unit
+                      ? convertTemperatureToCelsius(results[dayName]!.maxTemDay)
+                      : convertTemperatureToFahrenheit(
+                          results[dayName]!.maxTemDay),
                 ),
                 Text(
-                  '${results[dayName]!.minTempDay.round()}$letter',
+                  unit
+                      ? convertTemperatureToCelsius(
+                          results[dayName]!.minTempDay)
+                      : convertTemperatureToFahrenheit(
+                          results[dayName]!.minTempDay),
                   style: const TextStyle(
                     fontWeight: FontWeight.w100,
                   ),
@@ -94,7 +102,11 @@ class ExpandedListItem extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${weatherEvery3Hours.main.temp.round()}$letter',
+                                unit
+                                    ? convertTemperatureToCelsius(
+                                        weatherEvery3Hours.main.temp)
+                                    : convertTemperatureToFahrenheit(
+                                        weatherEvery3Hours.main.temp),
                               ),
                             ],
                           ),

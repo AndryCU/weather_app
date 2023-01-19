@@ -6,8 +6,6 @@ import '../../../../../../core/exeptions.dart';
 import '../../../../core/const/end_points.dart';
 import '../../../../core/const/keys.dart';
 import '../../../../core/platfoms/internet_checker.dart';
-import '../../../../core/platfoms/share_preferences_handler.dart';
-import '../../../../injection/locator.dart';
 import '../../domain/entities/next_days_weather_main.dart';
 import '../../domain/repositories/next_days_repository.dart';
 
@@ -21,8 +19,6 @@ class NextDaysWeatherRepositoryImplementation
     if (!(await CheckInternetConnection.checkIfHaveInternet())) {
       return Left(NoInternetException());
     }
-    final unitValue =
-        await locator.get<SharedPreferencesManager>().getUnitValue();
     final uri = Uri(
       host: baseUrl,
       scheme: 'https',
@@ -31,7 +27,6 @@ class NextDaysWeatherRepositoryImplementation
         'lat': '$lat',
         'lon': '$lon',
         'appid': openWeatherMapKey,
-        'units': unitValue == true ? 'metric' : 'imperial',
       },
     );
     final response = await http.get(uri).timeout(const Duration(seconds: 10));
