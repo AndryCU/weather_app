@@ -4,17 +4,20 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/core/const/end_points.dart';
 import 'package:weather_app/core/exeptions.dart';
 import 'package:weather_app/features/feth_location/domain/usecases/geo_coding_list.dart';
 import 'package:weather_app/features/five_days_weather/presentation/bloc/five_days_weather_bloc.dart';
+import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
 
-import '../../features/current_weather/presentation/bloc/current_weather_bloc.dart';
-import '../../features/current_weather/presentation/widgets/current_weather_main_widget.dart';
-import '../../features/feth_location/domain/entities/geocoding/geo_coding_entity.dart';
-import '../../features/five_days_weather/presentation/widgets/day_expanded_widget.dart';
-import '../../injection/locator.dart';
+import '../../../current_weather/presentation/bloc/current_weather_bloc.dart';
+import '../../../current_weather/presentation/widgets/current_weather_main_widget.dart';
+import '../../../feth_location/domain/entities/geocoding/geo_coding_entity.dart';
+import '../../../five_days_weather/presentation/widgets/day_expanded_widget.dart';
+import '../../../../injection/locator.dart';
 
 class WeatherPage extends StatefulWidget {
   const WeatherPage({super.key});
@@ -24,12 +27,13 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  late bool unitValue;
+  late bool unitValue, order_days;
   @override
   void initState() {
     unitValue =
         locator.get<SharedPreferences>().getBool('units_value') ?? false;
-
+    order_days =
+        locator.get<SharedPreferences>().getBool('order_days') ?? false;
     super.initState();
   }
 
@@ -40,7 +44,7 @@ class _WeatherPageState extends State<WeatherPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: const Color.fromRGBO(26, 28, 30, 0),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.only(top: 4.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -56,7 +60,9 @@ class _WeatherPageState extends State<WeatherPage> {
                     style: TextStyle(fontSize: 30, color: Colors.white),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.go('/settings_page');
+                      },
                       icon: const Icon(
                         Icons.settings,
                         color: Colors.white,
@@ -67,7 +73,7 @@ class _WeatherPageState extends State<WeatherPage> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 2),
+                    padding: const EdgeInsets.only(top: 4),
                     child: SizedBox(
                       width: size.width * 0.95,
                       child: TypeAheadField<GeoCodingModel>(
@@ -80,9 +86,21 @@ class _WeatherPageState extends State<WeatherPage> {
                                 color: Colors.white,
                               ),
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(
+                                  width: 3, color: Colors.white),
+                            ),
                             contentPadding: const EdgeInsets.only(left: 10),
-                            hintText: 'Type here a location',
+                            //helperText: 'Type here a location',
+                            helperStyle: const TextStyle(
+                              color: Colors.white30,
+                            ),
                             hintStyle: const TextStyle(
+                              color: Colors.white30,
+                            ),
+                            labelText: 'Type here a location',
+                            labelStyle: const TextStyle(
                               color: Colors.white30,
                             ),
                           ),
@@ -104,6 +122,10 @@ class _WeatherPageState extends State<WeatherPage> {
                             leading: const Icon(Icons.flag),
                             title: Text(itemData.name),
                             subtitle: CachedNetworkImage(
+                              errorWidget: (context, url, error) => const Icon(
+                                Icons.error,
+                                color: Colors.red,
+                              ),
                               imageUrl: '$baseUrlFlags${itemData.country}',
                               height: size.height * 0.04,
                             ),
@@ -121,13 +143,16 @@ class _WeatherPageState extends State<WeatherPage> {
                           );
                         },
                         onSuggestionSelected: (suggestion) {
-                          BlocProvider.of<CurrentWeatherBloc>(context,
-                                  listen: false)
-                              .add(CurrentWeatherStarted(
-                                  suggestion.lat, suggestion.lon));
-                          BlocProvider.of<FiveDaysWeatherBloc>(context,
-                                  listen: false)
-                              .add(GetNextDaysWeatherEvent(
+                          // BlocProvider.of<CurrentWeatherBloc>(context,
+                          //         listen: false)
+                          //     .add(CurrentWeatherStarted(
+                          //         suggestion.lat, suggestion.lon));
+                          // BlocProvider.of<FiveDaysWeatherBloc>(context,
+                          //         listen: false)
+                          //     .add(GetNextDaysWeatherEvent(
+                          //         suggestion.lat, suggestion.lon));
+                          BlocProvider.of<MainUiBloc>(context, listen: false)
+                              .add(WeatherCallEvent(
                                   suggestion.lat, suggestion.lon));
                         },
                         noItemsFoundBuilder: (context) {
@@ -147,10 +172,54 @@ class _WeatherPageState extends State<WeatherPage> {
                 ],
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
-              const CurrentWeatherMain(),
-              ExpandedListItem(),
+              BlocBuilder<MainUiBloc, WeatherState>(
+                builder: (context, state) {
+                  if (state is WeatherLoadingState) {
+                    return Center(
+                      child: Container(
+                        height: size.height * 0.2,
+                        width: size.width * 0.22,
+                        decoration: BoxDecoration(
+                          color: Colors.white60,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Lottie.asset('assets/133946-hourglass.json',
+                                fit: BoxFit.fill),
+                            const Text(
+                              'Loading',
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                  if (state is WeatherLoadedState) {
+                    return Column(
+                      children: [
+                        CurrentWeatherMain(
+                            currentWeatherModel: state.currentWeatherModel),
+                        ExpandedListItem(
+                          weatherByDaysMainEntity:
+                              state.weatherByDaysMainEntity,
+                        ),
+                      ],
+                    );
+                  }
+                  if (state is WeatherErrorState) {
+                    return Center(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    );
+                  }
+                  return Container();
+                },
+              ),
             ],
           ),
         ),
