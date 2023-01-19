@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/routes.dart';
 import 'package:weather_app/features/current_weather/presentation/bloc/current_weather_bloc.dart';
 import 'package:weather_app/features/five_days_weather/presentation/bloc/five_days_weather_bloc.dart';
+import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 import 'features/feth_location/presentation/bloc/geocoding_bloc/geocoding_bloc.dart';
 import 'features/settings/presentation/cubit/settings_unit_cubit.dart';
@@ -35,10 +36,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => GeoCodingBloc()),
-        BlocProvider(create: (_) => CurrentWeatherBloc()),
         BlocProvider(create: (_) => UnitCubit()..getValue()),
         BlocProvider(create: (_) => OrderCubit()..getValueOrder()),
-        BlocProvider(create: (_) => FiveDaysWeatherBloc()),
+        BlocProvider(create: (_) => MainUiBloc()),
       ],
       child: MaterialApp.router(
         routerConfig: route,
