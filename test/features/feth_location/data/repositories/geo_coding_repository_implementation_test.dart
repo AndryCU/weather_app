@@ -35,13 +35,13 @@ void main() {
           //arrange
 
           //act
-          when(mockitoService.getPositionByName('sadjkhksajdh')).thenAnswer(
+          when(mockitoService.fetchPositionByName('sadjkhksajdh')).thenAnswer(
               (realInvocation) async => Future.value(<GeoCodingModel>[]));
-          var r = await mockitoService.getPositionByName('sadjkhksajdh');
+          var r = await mockitoService.fetchPositionByName('sadjkhksajdh');
 
           //assert
           expect(r.length, 0);
-          verify(mockitoService.getPositionByName('sadjkhksajdh'));
+          verify(mockitoService.fetchPositionByName('sadjkhksajdh'));
           verifyNoMoreInteractions(mockitoService);
         },
       );
@@ -52,12 +52,39 @@ void main() {
           //arrange
 
           //act
-          when(mockitoService.getPositionByName('Havana'))
+          when(mockitoService.fetchPositionByName('Havana'))
               .thenThrow(NoInternetException());
           //assert
-          expect(() => mockitoService.getPositionByName('Havana'),
+          expect(() => mockitoService.fetchPositionByName('Havana'),
               throwsException);
-          verify(mockitoService.getPositionByName('Havana'));
+          verify(mockitoService.fetchPositionByName('Havana'));
+          verifyNoMoreInteractions(mockitoService);
+        },
+      );
+
+      test(
+        'should return a list of locations',
+        () async {
+          //arrange
+          final file = File('test/responses_examples/geoCoding_response.json')
+              .readAsStringSync();
+          final t = jsonDecode(file) as List<dynamic>;
+          List<GeoCodingModel> geocodingModelList = [];
+          for (var a in t) {
+            Map<String, dynamic> d = a as Map<String, dynamic>;
+            geocodingModelList.add(GeoCodingModel.fromJson(d));
+          }
+          //act
+          when(mockitoService.fetchPositionByName('Havana')).thenAnswer(
+              (realInvocation) async => Future.value(geocodingModelList));
+          final resultList = await mockitoService.fetchPositionByName('Havana');
+          //assert
+          expect(resultList.length, 5);
+          expect(geocodingModelList.length, 5);
+          expect(geocodingModelList, isA<List<GeoCodingModel>>());
+          expect(resultList, isA<List<GeoCodingModel>>());
+          expect(resultList, geocodingModelList);
+          verify(mockitoService.fetchPositionByName('Havana'));
           verifyNoMoreInteractions(mockitoService);
         },
       );
