@@ -10,10 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/core/const/end_points.dart';
 import 'package:weather_app/core/exeptions.dart';
 import 'package:weather_app/features/feth_location/domain/usecases/geo_coding_list.dart';
-import 'package:weather_app/features/five_days_weather/presentation/bloc/five_days_weather_bloc.dart';
 import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
 
-import '../../../current_weather/presentation/bloc/current_weather_bloc.dart';
 import '../../../current_weather/presentation/widgets/current_weather_main_widget.dart';
 import '../../../feth_location/domain/entities/geocoding/geo_coding_entity.dart';
 import '../../../five_days_weather/presentation/widgets/day_expanded_widget.dart';
@@ -118,39 +116,53 @@ class _WeatherPageState extends State<WeatherPage> {
                           return [];
                         },
                         itemBuilder: (context, itemData) {
-                          return ListTile(
-                            leading: const Icon(Icons.flag),
-                            title: Text(itemData.name),
-                            subtitle: CachedNetworkImage(
-                              errorWidget: (context, url, error) => const Icon(
-                                Icons.error,
-                                color: Colors.red,
+                          final state =
+                              itemData.state != null ? '${itemData.state}' : '';
+                          return Card(
+                            elevation: 20,
+                            child: ListTile(
+                              title: Text(itemData.name),
+                              subtitle: Text(state),
+                              leading: CachedNetworkImage(
+                                fit: BoxFit.fill,
+                                imageUrl: '$baseUrlFlags${itemData.country}',
+                                height: size.height * 0.04,
+                                width: size.width * 0.1,
                               ),
-                              imageUrl: '$baseUrlFlags${itemData.country}',
-                              height: size.height * 0.04,
                             ),
                           );
                         },
                         errorBuilder: (context, error) {
                           if (error is NoInternetException) {
-                            return Text(error.message);
+                            return Text(
+                              error.message,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: size.width * 0.05,
+                              ),
+                              textAlign: TextAlign.center,
+                            );
                           }
                           if (error is TimeoutException) {
-                            return const Text('Try again');
+                            return Text(
+                              'Try again',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: size.width * 0.05,
+                              ),
+                              textAlign: TextAlign.center,
+                            );
                           }
                           return Text(
                             'Oops something went wrong: ${error.toString()}',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: size.width * 0.05,
+                            ),
+                            textAlign: TextAlign.center,
                           );
                         },
                         onSuggestionSelected: (suggestion) {
-                          // BlocProvider.of<CurrentWeatherBloc>(context,
-                          //         listen: false)
-                          //     .add(CurrentWeatherStarted(
-                          //         suggestion.lat, suggestion.lon));
-                          // BlocProvider.of<FiveDaysWeatherBloc>(context,
-                          //         listen: false)
-                          //     .add(GetNextDaysWeatherEvent(
-                          //         suggestion.lat, suggestion.lon));
                           BlocProvider.of<MainUiBloc>(context, listen: false)
                               .add(WeatherCallEvent(
                                   suggestion.lat, suggestion.lon));
@@ -159,7 +171,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              'No locations found',
+                              'Ups! No locations found',
                               style: TextStyle(
                                 fontSize: size.width * 0.05,
                               ),
@@ -186,6 +198,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Lottie.asset('assets/133946-hourglass.json',
                                 fit: BoxFit.fill),
