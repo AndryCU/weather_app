@@ -13,7 +13,7 @@ class GeoCodingRepositoryImplantation extends GeoCodingRepository {
   final ApiHandler _apiHandler;
   GeoCodingRepositoryImplantation(this._apiHandler);
   @override
-  Future<List<GeoCodingModel>> getPositionByName(String city) async {
+  Future<List<GeoCodingModel>> fetchPositionByName(String city) async {
     if (!(await CheckInternetConnection.checkIfHaveInternet())) {
       throw NoInternetException();
     }
@@ -36,7 +36,6 @@ class GeoCodingRepositoryImplantation extends GeoCodingRepository {
           .toList();
       return itemsList;
     } else {
-      //TODO buscar los posibles codigos de error
       throw ApiError(response.statusCode);
     }
   }

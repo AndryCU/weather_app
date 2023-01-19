@@ -17,12 +17,10 @@ class CurrentWeatherRepositoryImplementation extends CurrentWeatherRepository {
   final ApiHandler _apiHandler;
   CurrentWeatherRepositoryImplementation(this._apiHandler);
   @override
-  Future<Either<Exception, CurrentWeatherModel>> getCurrentWeather({
+  Future<Either<Exception, CurrentWeatherModel>> fetchCurrentWeather({
     required double lat,
     required double lon,
   }) async {
-    final unitValue =
-        await locator.get<SharedPreferencesManager>().getUnitValue();
     Map<String, String> body = {
       'lat': '$lat',
       'lon': '$lon',

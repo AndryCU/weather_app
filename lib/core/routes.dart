@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:weather_app/core/weather_ui/weather_page.dart';
+import 'package:weather_app/features/main_ui/presentation/pages/weather_page.dart';
 import 'package:weather_app/features/settings/presentation/pages/settings_page.dart';
 
 final GoRouter route = GoRouter(

@@ -9,7 +9,7 @@ class ListGeoCodingUseCase {
   ListGeoCodingUseCase(this._geoCodingRepository);
 
   Future<List<GeoCodingModel>> getCitiesNames(String city) async {
-    final result = await _geoCodingRepository.getPositionByName(city);
+    final result = await _geoCodingRepository.fetchPositionByName(city);
     return result;
   }
 }

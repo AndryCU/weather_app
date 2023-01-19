@@ -10,7 +10,7 @@ class CurrentWeatherUseCase {
   Future<Either<Exception, CurrentWeatherModel>> getCurrentWeather(
       {required double lat, required double lon}) async {
     final current =
-        await _currentWeatherRepository.getCurrentWeather(lat: lat, lon: lon);
+        await _currentWeatherRepository.fetchCurrentWeather(lat: lat, lon: lon);
     return current;
   }
 }

@@ -5,5 +5,5 @@ class ApiError implements Exception {
 }
 
 class NoInternetException implements Exception {
-  String get message => "There is no Internet conection";
+  String get message => "There is no Internet connection";
 }
