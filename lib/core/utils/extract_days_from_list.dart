@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../../features/five_days_weather/domain/entities/weather_day_list.dart';
 
-class CustomDaysUtil {
+class CustomDaysUtils {
   static Map<int, DaysDataHelper> getDaysSeparated(
       {required List<WeatherList> list}) {
     final Map<int, DaysDataHelper> result = {};

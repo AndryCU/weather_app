@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../../../core/exeptions.dart';
 import '../../../../core/const/end_points.dart';
 import '../../../../core/const/keys.dart';
-import '../../../../core/platfoms/internet_checker.dart';
+import '../../../../core/platfoms/platfoms.dart';
 import '../../domain/entities/next_days_weather_main.dart';
 import '../../domain/repositories/next_days_repository.dart';
 

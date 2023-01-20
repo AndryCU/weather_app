@@ -1,9 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/core/platfoms/network_handler.dart';
 import 'package:weather_app/features/five_days_weather/data/repositories/next_days_weather_reposiroty_implementation.dart';
 
-import '../core/platfoms/share_preferences_handler.dart';
+import '../core/platfoms/platfoms.dart';
 import '../features/current_weather/data/repositories/current_weather_repository_implementation.dart';
 import '../features/current_weather/domain/repositories/current_weather_repository.dart';
 import '../features/current_weather/domain/usecases/list_current_weather_use_case.dart';

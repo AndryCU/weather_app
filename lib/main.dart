@@ -4,8 +4,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/routes.dart';
-import 'package:weather_app/features/current_weather/presentation/bloc/current_weather_bloc.dart';
-import 'package:weather_app/features/five_days_weather/presentation/bloc/five_days_weather_bloc.dart';
 import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 import 'features/feth_location/presentation/bloc/geocoding_bloc/geocoding_bloc.dart';

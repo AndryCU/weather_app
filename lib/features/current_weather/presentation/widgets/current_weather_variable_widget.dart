@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class CurrentWeatherColumns extends StatelessWidget {
   const CurrentWeatherColumns(
@@ -18,14 +15,14 @@ class CurrentWeatherColumns extends StatelessWidget {
         ),
         Text(
           value,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           cat,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white60,
           ),
         ),

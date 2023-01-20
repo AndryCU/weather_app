@@ -1,8 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app/core/utils/extract_days_from_list.dart';
-import 'package:weather_app/core/utils/temperature_converter.dart';
+import 'package:weather_app/core/utils/utils.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
@@ -17,7 +16,7 @@ class ExpandedListItem extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final unit = context.read<UnitCubit>().state;
     final results =
-        CustomDaysUtil.getDaysSeparated(list: weatherByDaysMainEntity.list);
+        CustomDaysUtils.getDaysSeparated(list: weatherByDaysMainEntity.list);
     return ListView.builder(
       reverse: context.watch<OrderCubit>().state,
       physics: const NeverScrollableScrollPhysics(),
@@ -34,7 +33,7 @@ class ExpandedListItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      CustomDaysUtil.getNameDayOfWeek(dayName),
+                      CustomDaysUtils.getNameDayOfWeek(dayName),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -42,7 +41,7 @@ class ExpandedListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      CustomDaysUtil.getDayOfMonth(dayName),
+                      CustomDaysUtils.getDayOfMonth(dayName),
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         fontSize: size.height * 0.025,
@@ -52,15 +51,16 @@ class ExpandedListItem extends StatelessWidget {
                 ),
                 Text(
                   unit
-                      ? convertTemperatureToCelsius(results[dayName]!.maxTemDay)
-                      : convertTemperatureToFahrenheit(
+                      ? TemperatureHelper.convertTemperatureToCelsius(
+                          results[dayName]!.maxTemDay)
+                      : TemperatureHelper.convertTemperatureToFahrenheit(
                           results[dayName]!.maxTemDay),
                 ),
                 Text(
                   unit
-                      ? convertTemperatureToCelsius(
+                      ? TemperatureHelper.convertTemperatureToCelsius(
                           results[dayName]!.minTempDay)
-                      : convertTemperatureToFahrenheit(
+                      : TemperatureHelper.convertTemperatureToFahrenheit(
                           results[dayName]!.minTempDay),
                   style: const TextStyle(
                     fontWeight: FontWeight.w100,
@@ -90,7 +90,7 @@ class ExpandedListItem extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                CustomDaysUtil.getHourOfDay(
+                                CustomDaysUtils.getHourOfDay(
                                     weatherEvery3Hours.dt),
                               ),
                               ClipRRect(
@@ -103,10 +103,12 @@ class ExpandedListItem extends StatelessWidget {
                               ),
                               Text(
                                 unit
-                                    ? convertTemperatureToCelsius(
-                                        weatherEvery3Hours.main.temp)
-                                    : convertTemperatureToFahrenheit(
-                                        weatherEvery3Hours.main.temp),
+                                    ? TemperatureHelper
+                                        .convertTemperatureToCelsius(
+                                            weatherEvery3Hours.main.temp)
+                                    : TemperatureHelper
+                                        .convertTemperatureToFahrenheit(
+                                            weatherEvery3Hours.main.temp),
                               ),
                             ],
                           ),

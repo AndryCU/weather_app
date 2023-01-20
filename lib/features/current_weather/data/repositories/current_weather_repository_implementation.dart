@@ -2,14 +2,10 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:weather_app/core/exeptions.dart';
-import 'package:http/http.dart' as http;
-import 'package:weather_app/core/platfoms/share_preferences_handler.dart';
-import 'package:weather_app/injection/locator.dart';
 
 import '../../../../core/const/end_points.dart';
 import '../../../../core/const/keys.dart';
-import '../../../../core/platfoms/internet_checker.dart';
-import '../../../../core/platfoms/network_handler.dart';
+import '../../../../core/platfoms/platfoms.dart';
 import '../../domain/entities/current_weather_entity.dart';
 import '../../domain/repositories/current_weather_repository.dart';
 

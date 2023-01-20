@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:weather_app/core/platfoms/share_preferences_handler.dart';
 
+import '../../../../core/platfoms/platfoms.dart';
 import '../../../../injection/locator.dart';
 
 class UnitCubit extends Cubit<bool> {

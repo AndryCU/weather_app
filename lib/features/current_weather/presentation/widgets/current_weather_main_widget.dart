@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/features/current_weather/presentation/widgets/current_weather_variable_widget.dart';
 
-import '../../../../core/utils/temperature_converter.dart';
+import '../../../../core/utils/utils.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
 import '../../domain/entities/current_weather_entity.dart';
 
@@ -43,10 +43,12 @@ class CurrentWeatherMain extends StatelessWidget {
                           builder: (context, state) {
                             return Text(
                               state
-                                  ? convertTemperatureToCelsius(
-                                      currentWeatherModel.main.temp)
-                                  : convertTemperatureToFahrenheit(
-                                      currentWeatherModel.main.temp),
+                                  ? TemperatureHelper
+                                      .convertTemperatureToCelsius(
+                                          currentWeatherModel.main.temp)
+                                  : TemperatureHelper
+                                      .convertTemperatureToFahrenheit(
+                                          currentWeatherModel.main.temp),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: size.width * 0.15,
@@ -93,6 +95,11 @@ class CurrentWeatherMain extends StatelessWidget {
                   icon: Icons.wind_power,
                   value: '${currentWeatherModel.wind.speed} m/s',
                   cat: 'Wind',
+                ),
+                CurrentWeatherColumns(
+                  icon: Icons.arrow_downward_rounded,
+                  value: '${currentWeatherModel.main.pressure} hPa',
+                  cat: 'Pressure',
                 ),
                 CurrentWeatherColumns(
                   icon: Icons.water_drop_rounded,

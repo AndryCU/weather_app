@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'package:dartz/dartz.dart';
 import 'package:weather_app/core/const/end_points.dart';
 import 'package:weather_app/core/const/keys.dart';
-import 'package:weather_app/core/platfoms/internet_checker.dart';
 
 import '../../../../../../core/exeptions.dart';
-import '../../../../core/platfoms/network_handler.dart';
+import '../../../../core/platfoms/platfoms.dart';
 import '../../domain/entities/geocoding/geo_coding_entity.dart';
 import '../../domain/repositories/geo_coding_repository.dart';
 
