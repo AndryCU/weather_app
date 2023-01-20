@@ -75,3 +75,5 @@ lib/features/five_days_weather/domain/entities/weather_day_list.freezed.dart
 lib/features/five_days_weather/domain/entities/weather_day_list.g.dart
 
 test/features/feth_location/data/repositories/geo_coding_repository_implementation_test.mocks.dart
+
+test/features/five_days_weather/data/repositories/next_days_weather_reposiroty_implementation_test.mocks.dart
