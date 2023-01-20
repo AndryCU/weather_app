@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../features/five_days_weather/domain/entities/weather_day_list.dart';
+import '../../features/five_days_weather/domain/entities/five_days_entity.dart';
 
 class CustomDaysUtils {
   static Map<int, DaysDataHelper> getDaysSeparated(

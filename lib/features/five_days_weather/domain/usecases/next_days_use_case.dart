@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:weather_app/features/five_days_weather/domain/entities/next_days_weather_main.dart';
 import 'package:weather_app/features/five_days_weather/domain/repositories/next_days_repository.dart';
-
-import '../entities/next_days_weather_main.dart';
 
 class NextDaysUseCase {
   final NextDaysWeatherRepository _nextDaysWeatherRepository;

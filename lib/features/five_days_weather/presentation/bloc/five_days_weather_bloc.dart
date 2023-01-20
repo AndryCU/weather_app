@@ -4,10 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather_app/core/exeptions.dart';
+import 'package:weather_app/features/five_days_weather/domain/entities/next_days_weather_main.dart';
 import 'package:weather_app/features/five_days_weather/domain/usecases/next_days_use_case.dart';
 
 import '../../../../injection/locator.dart';
-import '../../domain/entities/next_days_weather_main.dart';
 
 part 'five_days_weather_event.dart';
 part 'five_days_weather_state.dart';

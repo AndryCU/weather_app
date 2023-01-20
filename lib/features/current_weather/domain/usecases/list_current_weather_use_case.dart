@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 
-import '../entities/current_weather_entity.dart';
+import '../entities/current_weather_entities.dart';
 import '../repositories/current_weather_repository.dart';
 
 class CurrentWeatherUseCase {

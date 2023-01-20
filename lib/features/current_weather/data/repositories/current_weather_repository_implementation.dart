@@ -6,7 +6,7 @@ import 'package:weather_app/core/exeptions.dart';
 import '../../../../core/const/end_points.dart';
 import '../../../../core/const/keys.dart';
 import '../../../../core/platfoms/platfoms.dart';
-import '../../domain/entities/current_weather_entity.dart';
+import '../../domain/entities/current_weather_entities.dart';
 import '../../domain/repositories/current_weather_repository.dart';
 
 class CurrentWeatherRepositoryImplementation extends CurrentWeatherRepository {

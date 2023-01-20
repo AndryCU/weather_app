@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:weather_app/core/platfoms/network_handler.dart';
+import 'package:weather_app/core/platfoms/platfoms.dart';
 
 import 'network_handler_test.mocks.dart';
 
