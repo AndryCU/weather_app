@@ -5,7 +5,7 @@ import 'package:weather_app/features/current_weather/presentation/widgets/curren
 
 import '../../../../core/utils/utils.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
-import '../../domain/entities/current_weather_entity.dart';
+import '../../domain/entities/current_weather_entities.dart';
 
 class CurrentWeatherMain extends StatelessWidget {
   final CurrentWeatherModel currentWeatherModel;
@@ -18,11 +18,12 @@ class CurrentWeatherMain extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
+            padding: const EdgeInsets.only(bottom: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(12),
               color: const Color.fromRGBO(32, 35, 41, 1),
@@ -83,6 +84,7 @@ class CurrentWeatherMain extends StatelessWidget {
             height: 15,
           ),
           Container(
+            padding: const EdgeInsets.only(bottom: 10, top: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(12),
               color: const Color.fromRGBO(32, 35, 41, 1),
@@ -98,7 +100,7 @@ class CurrentWeatherMain extends StatelessWidget {
                 ),
                 CurrentWeatherColumns(
                   icon: Icons.arrow_downward_rounded,
-                  value: '${currentWeatherModel.main.pressure} hPa',
+                  value: '${currentWeatherModel.main.pressure.round()} hPa',
                   cat: 'Pressure',
                 ),
                 CurrentWeatherColumns(
