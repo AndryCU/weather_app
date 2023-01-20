@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:weather_app/core/utils/temperature_converter.dart';
 
 void main() {
   group(
@@ -8,14 +9,14 @@ void main() {
       test(
         'should convert to Celsius',
         () {
-          final celsius = '${(temperature - 273.15).round()}°C';
+          final celsius = convertTemperatureToCelsius(temperature);
           expect(celsius, '30°C');
         },
       );
       test(
         'should convert to Fahrenheit',
         () {
-          final celsius = '${((temperature - 273.15) * 1.8 + 32).round()}°F';
+          final celsius = convertTemperatureToFahrenheit(temperature);
           expect(celsius, '86°F');
         },
       );

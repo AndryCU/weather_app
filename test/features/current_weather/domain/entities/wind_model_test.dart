@@ -12,6 +12,7 @@ void main() {
           .readAsStringSync();
       final model = WindModel.fromJson(jsonDecode(file)['wind']);
 
+      expect(model, isA<WindModel>());
       expect(model.speed, 2.81);
     },
   );
