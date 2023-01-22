@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:weather_app/core/exeptions.dart';
 
@@ -17,17 +20,27 @@ class MainUiBloc extends Bloc<WeatherEvent, WeatherState> {
       emit(WeatherLoadingState());
       WeatherByDaysMainEntity? nextDaysData;
       CurrentWeatherModel? currentWeatherModelData;
-      final nextDays = await locator
-          .get<NextDaysUseCase>()
-          .getNextDaysWeather(lat: event.lat, lon: event.lon);
-      final currentWeather =
-          await locator.get<CurrentWeatherUseCase>().getCurrentWeather(
-                lat: event.lat,
-                lon: event.lon,
-              );
+      late Either<Exception, WeatherByDaysMainEntity> nextDays;
+      late Either<Exception, CurrentWeatherModel> currentWeather;
+
+      try {
+        nextDays = await locator
+            .get<NextDaysUseCase>()
+            .getNextDaysWeather(lat: event.lat, lon: event.lon);
+        currentWeather =
+            await locator.get<CurrentWeatherUseCase>().getCurrentWeather(
+                  lat: event.lat,
+                  lon: event.lon,
+                );
+      } catch (e) {
+        emit(const WeatherErrorState('An error ocurred'));
+      }
       nextDays.fold((l) {
         if (l is NoInternetException) {
           emit(WeatherErrorState(l.message));
+        }
+        if (l is TimeoutException) {
+          emit(const WeatherErrorState('Retry again'));
         }
       }, (r) {
         nextDaysData = r;
@@ -43,5 +56,7 @@ class MainUiBloc extends Bloc<WeatherEvent, WeatherState> {
         emit(WeatherLoadedState(nextDaysData!, currentWeatherModelData!));
       }
     });
+
+    on<WeatherResetEvent>((event, emit) => emit(WeatherInitialState()));
   }
 }

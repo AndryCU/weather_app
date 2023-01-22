@@ -12,7 +12,4 @@ class WeatherCallEvent extends WeatherEvent {
   const WeatherCallEvent(this.lat, this.lon);
 }
 
-class WeatherRefreshEvent extends WeatherEvent {
-  final double lat, lon;
-  const WeatherRefreshEvent(this.lat, this.lon);
-}
+class WeatherResetEvent extends WeatherEvent {}

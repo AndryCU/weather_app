@@ -17,6 +17,8 @@ class WeatherLoadedState extends WeatherState {
 
   const WeatherLoadedState(
       this.weatherByDaysMainEntity, this.currentWeatherModel);
+  @override
+  List<Object> get props => [currentWeatherModel, weatherByDaysMainEntity];
 }
 
 class WeatherErrorState extends WeatherState {
