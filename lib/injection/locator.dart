@@ -6,6 +6,8 @@ import '../core/platfoms/platfoms.dart';
 import '../features/current_weather/data/repositories/current_weather_repository_implementation.dart';
 import '../features/current_weather/domain/repositories/current_weather_repository.dart';
 import '../features/current_weather/domain/usecases/list_current_weather_use_case.dart';
+import '../features/fetch_location_gps/data/repositories/location_gps_repository_implementarion.dart';
+import '../features/fetch_location_gps/domain/repositories/location_gps_repository.dart';
 import '../features/feth_location/data/repositories/geo_coding_repository_implementation.dart';
 import '../features/feth_location/domain/repositories/geo_coding_repository.dart';
 import '../features/feth_location/domain/usecases/geo_coding_list.dart';
@@ -32,4 +34,7 @@ Future<void> setup() async {
       await SharedPreferences.getInstance());
   locator.registerSingleton<SharedPreferencesManager>(
       SharedPreferencesManager(locator()));
+
+  locator.registerSingleton<LocationGpsRepository>(
+      LocationGpsRepositoryImplementation());
 }
