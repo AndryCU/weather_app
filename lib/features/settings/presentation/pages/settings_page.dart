@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/core/const/text_styles.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 
+import 'package:sizer/sizer.dart';
 import '../../../../injection/locator.dart';
 import '../cubit/settings_unit_cubit.dart';
 
@@ -32,15 +32,19 @@ class _SettingsPageState extends State<SettingsPage> {
       appBar: AppBar(
         title: Row(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Settings'),
-            Icon(Icons.settings),
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text(
+              'Settings',
+            ),
           ],
         ),
         backgroundColor: Colors.white60,
         leading: IconButton(
             onPressed: () {
-              context.go('/main');
+              Navigator.pop(context);
+              //context.go('/main');
+              //context.pop();
             },
             icon: const Icon(Icons.arrow_back)),
       ),
@@ -58,12 +62,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: BlocBuilder<UnitCubit, bool>(
                   builder: (context, state) {
                     return SwitchListTile(
-                      title: const Text(
-                        'Receive values in °C?',
-                        style: testBold,
+                      title: Text(
+                        'Receive values in °C',
+                        style: _titleTextStyle(),
                       ),
-                      subtitle: const Text(
-                          style: test1,
+                      subtitle: Text(
+                          style: _subTitleTextStyle(),
                           textAlign: TextAlign.left,
                           'If it is activated, it receives the temperature values in degrees Celsius, otherwise it receives them in Fahrenheit.'),
                       activeColor: Colors.white,
@@ -86,14 +90,14 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: BlocBuilder<OrderCubit, bool>(
                   builder: (context, state) {
                     return SwitchListTile(
-                      title: const Text(
+                      title: Text(
                         'Ascending/Descending',
-                        style: testBold,
+                        style: _titleTextStyle(),
                       ),
-                      subtitle: const Text(
-                          style: test1,
+                      subtitle: Text(
+                          style: _subTitleTextStyle(),
                           'If you activate this option, you will see the forecast for the next few days in ascending or descending order.'),
-                      activeColor: Colors.green,
+                      activeColor: Colors.white,
                       value: orderValue,
                       onChanged: (value) {
                         orderValue = value;
@@ -107,6 +111,21 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
         ),
       ),
+    );
+  }
+
+  TextStyle _subTitleTextStyle() {
+    return TextStyle(
+      color: Colors.white,
+      fontSize: 14.sp,
+    );
+  }
+
+  TextStyle _titleTextStyle() {
+    return TextStyle(
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+      fontSize: 16.sp,
     );
   }
 }

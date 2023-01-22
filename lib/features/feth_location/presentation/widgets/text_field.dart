@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-
+import 'package:sizer/sizer.dart';
 import '../../../../core/const/end_points.dart';
 import '../../../../core/exeptions.dart';
 import '../../../../injection/locator.dart';
@@ -32,21 +32,22 @@ class TextFieldLocation extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(width: 3, color: Colors.white),
           ),
-          contentPadding: const EdgeInsets.only(left: 10),
-          //helperText: 'Type here a location',
-          helperStyle: const TextStyle(
-            color: Colors.white30,
+          contentPadding: const EdgeInsets.only(
+            left: 10,
           ),
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             color: Colors.white30,
+            fontSize: 16.sp,
           ),
           labelText: 'Type here a location',
-          labelStyle: const TextStyle(
+          labelStyle: TextStyle(
             color: Colors.white30,
+            fontSize: 17.sp,
           ),
         ),
-        style: const TextStyle(
+        style: TextStyle(
           color: Colors.white,
+          fontSize: 16.sp,
         ),
       ),
       keepSuggestionsOnLoading: false,
@@ -63,13 +64,31 @@ class TextFieldLocation extends StatelessWidget {
         return Card(
           elevation: 20,
           child: ListTile(
-            title: Text(itemData.name),
-            subtitle: Text(state),
+            title: Text(
+              itemData.name,
+              style: TextStyle(
+                fontSize: 16.sp,
+              ),
+            ),
+            subtitle: Text(
+              state,
+              style: TextStyle(
+                fontSize: 14.sp,
+              ),
+            ),
             leading: CachedNetworkImage(
+              errorWidget: (context, url, error) {
+                return Icon(
+                  Icons.image_not_supported_sharp,
+                  color: Colors.red,
+                  size: 15.w,
+                );
+              },
               fit: BoxFit.fill,
               imageUrl: '$baseUrlFlags${itemData.country}',
-              height: size.height * 0.04,
-              width: size.width * 0.1,
+              height: 4.h,
+              width: 10.w,
+              filterQuality: FilterQuality.medium,
             ),
           ),
         );
@@ -80,7 +99,7 @@ class TextFieldLocation extends StatelessWidget {
             error.message,
             style: TextStyle(
               color: Colors.red,
-              fontSize: size.width * 0.05,
+              fontSize: 15.sp,
             ),
             textAlign: TextAlign.center,
           );
@@ -90,7 +109,7 @@ class TextFieldLocation extends StatelessWidget {
             'Try again',
             style: TextStyle(
               color: Colors.red,
-              fontSize: size.width * 0.05,
+              fontSize: 15.sp,
             ),
             textAlign: TextAlign.center,
           );
@@ -99,7 +118,7 @@ class TextFieldLocation extends StatelessWidget {
           'Oops something went wrong: ${error.toString()}',
           style: TextStyle(
             color: Colors.red,
-            fontSize: size.width * 0.05,
+            fontSize: 15.sp,
           ),
           textAlign: TextAlign.center,
         );
@@ -114,7 +133,7 @@ class TextFieldLocation extends StatelessWidget {
           child: Text(
             'Ups! No locations found',
             style: TextStyle(
-              fontSize: size.width * 0.05,
+              fontSize: 15.sp,
             ),
           ),
         );

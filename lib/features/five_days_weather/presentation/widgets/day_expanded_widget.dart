@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/core/utils/utils.dart';
 import 'package:weather_app/features/five_days_weather/domain/entities/next_days_weather_main.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
-
+import 'package:sizer/sizer.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
 
 class ExpandedListItem extends StatelessWidget {
@@ -14,7 +14,7 @@ class ExpandedListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final unit = context.read<UnitCubit>().state;
+    final unit = context.watch<UnitCubit>().state;
     final results =
         CustomDaysUtils.getDaysSeparated(list: weatherByDaysMainEntity.list);
     return Padding(
@@ -30,7 +30,10 @@ class ExpandedListItem extends StatelessWidget {
         itemBuilder: (context, indexDay) {
           final dayName = results.keys.toList()[indexDay];
           return Card(
+            color: const Color.fromRGBO(32, 35, 41, 1),
             child: ExpansionTile(
+              collapsedIconColor: Colors.white,
+              iconColor: Colors.white,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -42,15 +45,17 @@ class ExpandedListItem extends StatelessWidget {
                         CustomDaysUtils.getNameDayOfWeek(dayName),
                         textAlign: TextAlign.start,
                         style: TextStyle(
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: size.height * 0.030,
+                          fontSize: 16.sp,
                         ),
                       ),
                       Text(
                         CustomDaysUtils.getDayOfMonth(dayName),
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          fontSize: size.height * 0.025,
+                          color: Colors.white,
+                          fontSize: 14.sp,
                         ),
                       ),
                     ],
@@ -61,6 +66,10 @@ class ExpandedListItem extends StatelessWidget {
                             results[dayName]!.maxTemDay)
                         : TemperatureHelper.convertTemperatureToFahrenheit(
                             results[dayName]!.maxTemDay),
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      color: Colors.white,
+                    ),
                   ),
                   Text(
                     unit
@@ -68,16 +77,19 @@ class ExpandedListItem extends StatelessWidget {
                             results[dayName]!.minTempDay)
                         : TemperatureHelper.convertTemperatureToFahrenheit(
                             results[dayName]!.minTempDay),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.w100,
+                      fontSize: 16.sp,
+                      color: Colors.white,
                     ),
                   ),
                 ],
               ),
               children: [
-                SizedBox(
-                  height: size.height * 0.25,
-                  width: size.width * 0.95,
+                Container(
+                  color: const Color.fromRGBO(26, 28, 30, 0),
+                  height: 25.h,
+                  width: 95.w,
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
                     itemCount: results[dayName]!.listDays.length,
@@ -89,6 +101,7 @@ class ExpandedListItem extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Card(
+                          color: Color.fromARGB(179, 128, 128, 128),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Column(
@@ -98,13 +111,24 @@ class ExpandedListItem extends StatelessWidget {
                                 Text(
                                   CustomDaysUtils.getHourOfDay(
                                       weatherEvery3Hours.dt),
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: CachedNetworkImage(
                                     imageUrl:
                                         'https://openweathermap.org/img/wn/${weatherEvery3Hours.weather.first.icon}@2x.png',
-                                    height: size.height * 0.1,
+                                    height: 10.h,
+                                    errorWidget: (context, url, error) {
+                                      return Icon(
+                                        Icons.error,
+                                        color: Colors.red,
+                                        size: 7.w,
+                                      );
+                                    },
                                   ),
                                 ),
                                 Text(
@@ -115,6 +139,10 @@ class ExpandedListItem extends StatelessWidget {
                                       : TemperatureHelper
                                           .convertTemperatureToFahrenheit(
                                               weatherEvery3Hours.main.temp),
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ],
                             ),
