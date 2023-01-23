@@ -37,4 +37,30 @@ class GeoCodingRepositoryImplantation extends GeoCodingRepository {
       throw ApiError(response.statusCode);
     }
   }
+
+  @override
+  Future<GeoCodingModel> fetchPositionByLatAndLon(
+      {required double lat, required double lon}) async {
+    if (!(await CheckInternetConnection.checkIfHaveInternet())) {
+      throw NoInternetException();
+    }
+    Map<String, String> body = {
+      'lat': lat.toString(),
+      'lon': lon.toString(),
+      'appid': openWeatherMapKey,
+      'limit': '1',
+    };
+    final response = await _apiHandler.get(
+      path: reverseGeoCoding,
+      queryParameters: body,
+    );
+    if (response.statusCode == 200) {
+      final decoded = json.decode(response.body) as List;
+      final first = decoded.first as Map<String, dynamic>;
+      final model = GeoCodingModel.fromJson(first);
+      return model;
+    } else {
+      throw ApiError(response.statusCode);
+    }
+  }
 }
