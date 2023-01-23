@@ -29,7 +29,9 @@ class NextDaysWeatherRepositoryImplementation
         'appid': openWeatherMapKey,
       },
     );
-    final response = await http.get(uri).timeout(const Duration(seconds: 10));
+    final response = await http.get(uri).timeout(
+          const Duration(seconds: 20),
+        );
     if (response.statusCode == 200) {
       return Right(
           WeatherByDaysMainEntity.fromJson(json.decode(response.body)));

@@ -7,7 +7,7 @@ part 'temperature_entity.g.dart';
 class TemperatureEntity with _$TemperatureEntity {
   factory TemperatureEntity({
     required double temp,
-    required double feels_like,
+    required double pressure,
     required int humidity,
   }) = _TemperatureEntity;
   factory TemperatureEntity.fromJson(Map<String, Object?> json) =>
