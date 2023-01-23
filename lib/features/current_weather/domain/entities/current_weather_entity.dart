@@ -16,6 +16,7 @@ class CurrentWeatherModel with _$CurrentWeatherModel {
     required List<WeatherGeneralEntity> weather,
     required TemperatureEntity main,
     required SunDataEntity sys,
+    required String name,
   }) = _CurrentWeatherModel;
 
   factory CurrentWeatherModel.fromJson(Map<String, Object?> json) =>

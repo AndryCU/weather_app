@@ -27,7 +27,7 @@ class CurrentWeatherRepositoryImplementation extends CurrentWeatherRepository {
     }
     final response = await _apiHandler
         .get(path: currentWeatherEndPoint, queryParameters: body)
-        .timeout(const Duration(seconds: 10));
+        .timeout(const Duration(seconds: 20));
     if (response.statusCode == 200) {
       return Right(CurrentWeatherModel.fromJson(json.decode(response.body)));
     } else {

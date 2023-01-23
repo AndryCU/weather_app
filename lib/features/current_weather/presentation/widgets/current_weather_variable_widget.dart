@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CurrentWeatherColumns extends StatelessWidget {
   const CurrentWeatherColumns(
@@ -12,18 +13,20 @@ class CurrentWeatherColumns extends StatelessWidget {
         Icon(
           icon,
           color: Colors.white,
+          size: 8.w,
         ),
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.sp),
         ),
         Text(
           cat,
-          style: const TextStyle(
+          style: TextStyle(
             color: Colors.white60,
+            fontSize: 16.sp,
           ),
         ),
       ],

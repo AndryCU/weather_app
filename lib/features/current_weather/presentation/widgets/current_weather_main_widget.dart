@@ -1,8 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/const/end_points.dart';
+import 'package:weather_app/core/utils/sun_data_converter.dart';
 import 'package:weather_app/features/current_weather/presentation/widgets/current_weather_variable_widget.dart';
-
+import 'package:sizer/sizer.dart';
+import 'package:weather_app/features/feth_location/domain/entities/geocoding/geo_coding_entity.dart';
+import 'package:weather_app/features/feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
+import 'package:weather_app/features/feth_location/presentation/bloc/geocoding_bloc/geocoding_bloc.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
 import '../../domain/entities/current_weather_entities.dart';
@@ -16,65 +21,175 @@ class CurrentWeatherMain extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.only(left: 10, right: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.only(bottom: 10),
+            padding: const EdgeInsets.only(bottom: 10, left: 10, top: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(12),
               color: const Color.fromRGBO(32, 35, 41, 1),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  mainAxisSize: MainAxisSize.max,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        BlocBuilder<GeoCodingModelSelectedCubit,
+                            GeoCodingModel?>(
+                          builder: (context, state) {
+                            return Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CachedNetworkImage(
+                                    errorWidget: (context, url, error) {
+                                      return Icon(
+                                        Icons.image_not_supported_sharp,
+                                        color: Colors.red,
+                                        size: 10.w,
+                                      );
+                                    },
+                                    fit: BoxFit.fill,
+                                    imageUrl: '$baseUrlFlags${state!.country}',
+                                    height: 5.h,
+                                    width: 15.w,
+                                    filterQuality: FilterQuality.medium,
+                                  ),
+                                ),
+                                Text(
+                                  '${state.name}, \n${state.state ?? '${state.state}'}',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: Colors.white,
+                                    fontSize: 15.sp,
+                                  ),
+                                  softWrap: false,
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 1.h,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              SunDataConverter.fromMillisecondsToString(
+                                  currentWeatherModel.sys.sunrise),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                            Image.asset(
+                              'assets/sunrise_new.png',
+                              width: 12.w,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              SunDataConverter.fromMillisecondsToString(
+                                  currentWeatherModel.sys.sunset),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.sp,
+                              ),
+                            ),
+                            Image.asset(
+                              'assets/sunset_new.png',
+                              width: 12.w,
+                            ),
+                          ],
+                        ),
                         BlocBuilder<UnitCubit, bool>(
                           builder: (context, state) {
-                            return Text(
-                              state
-                                  ? TemperatureHelper
-                                      .convertTemperatureToCelsius(
-                                          currentWeatherModel.main.temp)
-                                  : TemperatureHelper
-                                      .convertTemperatureToFahrenheit(
-                                          currentWeatherModel.main.temp),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: size.width * 0.15,
-                                  fontWeight: FontWeight.bold),
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  state
+                                      ? TemperatureHelper
+                                          .convertTemperatureToCelsius(
+                                              currentWeatherModel.main.temp)
+                                      : TemperatureHelper
+                                          .convertTemperatureToFahrenheit(
+                                              currentWeatherModel.main.temp),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        '$baseUrlImagesOpenWeatherMap${currentWeatherModel.weather.first.icon}@2x.png',
+                                    width: 25.w,
+                                  ),
+                                ),
+                              ],
                             );
                           },
                         ),
                         Text(
                           '${currentWeatherModel.weather.first.main}, \n${currentWeatherModel.weather.first.description}',
                           textAlign: TextAlign.start,
+                          softWrap: false,
                           style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
                             color: const Color.fromARGB(255, 200, 200, 201),
-                            //color: Colors.white,
-                            fontSize: size.width * 0.07,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.sp,
                           ),
+                        ),
+                        SizedBox(
+                          height: 2.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Icon(
+                              Icons.alarm_rounded,
+                              color: Colors.white,
+                              size: 2.h,
+                            ),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(
+                              'All times are in your local time',
+                              textAlign: TextAlign.end,
+                              softWrap: false,
+                              style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
+                                color: Colors.white70,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10.sp,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: CachedNetworkImage(
-                          imageUrl:
-                              'https://openweathermap.org/img/wn/${currentWeatherModel.weather.first.icon}@2x.png',
-                          width: 80,
-                        )),
                   ],
                 ),
               ],
