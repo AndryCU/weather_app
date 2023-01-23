@@ -8,6 +8,7 @@ import 'package:weather_app/core/routes.dart';
 import 'package:weather_app/features/fetch_location_gps/presentation/bloc/fetch_location_gps_bloc.dart';
 import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
+import 'features/feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
 import 'features/feth_location/presentation/bloc/geocoding_bloc/geocoding_bloc.dart';
 import 'features/settings/presentation/cubit/settings_unit_cubit.dart';
 import 'injection/locator.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (_) => OrderCubit()..getValueOrder()),
           BlocProvider(create: (_) => MainUiBloc()),
           BlocProvider(create: (_) => FetchLocationGpsBloc()),
+          BlocProvider(create: (_) => GeoCodingModelSelectedCubit(null)),
         ],
         child: Sizer(builder: (context, orientation, deviceType) {
           return MaterialApp.router(

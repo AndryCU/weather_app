@@ -33,7 +33,7 @@ class MainUiBloc extends Bloc<WeatherEvent, WeatherState> {
                   lon: event.lon,
                 );
       } catch (e) {
-        emit(const WeatherErrorState('An error ocurred'));
+        emit(const WeatherErrorState('An error ocurred, try again'));
       }
       nextDays.fold((l) {
         if (l is NoInternetException) {
