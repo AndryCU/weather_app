@@ -13,15 +13,15 @@ class ExpandedListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     final unit = context.watch<UnitCubit>().state;
     final results =
         CustomDaysUtils.getDaysSeparated(list: weatherByDaysMainEntity.list);
     return Padding(
       padding: const EdgeInsets.only(
-        right: 10,
-        left: 10,
+        right: 8,
+        left: 8,
         top: 5,
+        bottom: 10,
       ),
       child: ListView.builder(
         reverse: context.watch<OrderCubit>().state,
@@ -101,7 +101,7 @@ class ExpandedListItem extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Card(
-                          color: Color.fromARGB(179, 128, 128, 128),
+                          color: const Color.fromARGB(179, 128, 128, 128),
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Column(

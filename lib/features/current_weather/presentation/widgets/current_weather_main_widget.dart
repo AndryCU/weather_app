@@ -7,7 +7,6 @@ import 'package:weather_app/features/current_weather/presentation/widgets/curren
 import 'package:sizer/sizer.dart';
 import 'package:weather_app/features/feth_location/domain/entities/geocoding/geo_coding_entity.dart';
 import 'package:weather_app/features/feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
-import 'package:weather_app/features/feth_location/presentation/bloc/geocoding_bloc/geocoding_bloc.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
 import '../../domain/entities/current_weather_entities.dart';
@@ -195,8 +194,8 @@ class CurrentWeatherMain extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: 2.h,
           ),
           Container(
             padding: const EdgeInsets.only(bottom: 10, top: 10),
