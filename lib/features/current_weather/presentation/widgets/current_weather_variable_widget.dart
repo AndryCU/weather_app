@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:weather_app/core/const/colors.dart';
 
 class CurrentWeatherColumns extends StatelessWidget {
   const CurrentWeatherColumns(
@@ -12,20 +13,20 @@ class CurrentWeatherColumns extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: Colors.white,
+          color: iconColor,
           size: 8.w,
         ),
         Text(
           value,
           style: TextStyle(
-              color: Colors.white,
+              color: textTitleColor,
               fontWeight: FontWeight.bold,
               fontSize: 16.sp),
         ),
         Text(
           cat,
           style: TextStyle(
-            color: Colors.white60,
+            color: cardSubtitleColor, //Colors.white60,
             fontSize: 16.sp,
           ),
         ),

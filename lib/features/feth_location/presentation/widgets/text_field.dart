@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:sizer/sizer.dart';
+import 'package:weather_app/core/const/colors.dart';
 import 'package:weather_app/features/fetch_location_gps/presentation/bloc/fetch_location_gps_bloc.dart';
 import 'package:weather_app/features/feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
 import '../../../../core/const/end_points.dart';
@@ -13,6 +14,7 @@ import '../../../../injection/locator.dart';
 import '../../../main_ui/presentation/bloc/main_ui_bloc.dart';
 import '../../domain/entities/geocoding/geo_coding_entity.dart';
 import '../../domain/usecases/geo_coding_list.dart';
+import 'text_feth_location.dart';
 
 class TextFieldLocation extends StatelessWidget {
   final TextEditingController _typeAheadController = TextEditingController();
@@ -32,12 +34,12 @@ class TextFieldLocation extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(
                   width: 3,
-                  color: Colors.white,
+                  color: borderSideColor,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(width: 3, color: Colors.white),
+                borderSide: const BorderSide(width: 3, color: borderSideColor),
               ),
               contentPadding: const EdgeInsets.only(
                 left: 10,
@@ -46,14 +48,14 @@ class TextFieldLocation extends StatelessWidget {
                 color: Colors.white30,
                 fontSize: 16.sp,
               ),
-              labelText: 'Type here a location',
+              labelText: hideMessage,
               labelStyle: TextStyle(
                 color: Colors.white30,
                 fontSize: 17.sp,
               ),
             ),
             style: TextStyle(
-              color: Colors.white,
+              color: textTitleColor,
               fontSize: 16.sp,
             ),
           ),
@@ -67,7 +69,7 @@ class TextFieldLocation extends StatelessWidget {
             return [];
           },
           itemBuilder: (context, itemData) {
-            final state = itemData.state != null ? '${itemData.state}' : '';
+            final state = itemData.state ?? '';
             return Card(
               elevation: 20,
               child: ListTile(
@@ -87,7 +89,7 @@ class TextFieldLocation extends StatelessWidget {
                   errorWidget: (context, url, error) {
                     return Icon(
                       Icons.image_not_supported_sharp,
-                      color: Colors.red,
+                      color: iconErrorColor,
                       size: 10.w,
                     );
                   },
@@ -105,7 +107,7 @@ class TextFieldLocation extends StatelessWidget {
               return Text(
                 error.message,
                 style: TextStyle(
-                  color: Colors.red,
+                  color: iconErrorColor,
                   fontSize: 15.sp,
                 ),
                 textAlign: TextAlign.center,
@@ -113,16 +115,16 @@ class TextFieldLocation extends StatelessWidget {
             }
             if (error is TimeoutException) {
               return Text(
-                'Try again',
+                tryAgainText,
                 style: TextStyle(
-                  color: Colors.red,
+                  color: iconErrorColor,
                   fontSize: 15.sp,
                 ),
                 textAlign: TextAlign.center,
               );
             }
             return Text(
-              'Oops something went wrong: ${error.toString()}',
+              '$generalError ${error.toString()}',
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 15.sp,
@@ -144,7 +146,7 @@ class TextFieldLocation extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                'Ups! No locations found',
+                noLocationFound,
                 style: TextStyle(
                   fontSize: 15.sp,
                 ),

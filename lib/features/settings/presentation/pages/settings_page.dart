@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:weather_app/core/const/colors.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 
 import 'package:sizer/sizer.dart';
+import 'package:weather_app/features/settings/presentation/pages/text_settings.dart';
 import '../../../../injection/locator.dart';
 import '../cubit/settings_unit_cubit.dart';
 
@@ -33,22 +34,27 @@ class _SettingsPageState extends State<SettingsPage> {
         title: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.end,
-          children: const [
+          children: [
             Text(
-              'Settings',
+              appBarSettings,
+              style: TextStyle(
+                color: textTitleColor,
+                fontSize: 30.sp,
+              ),
             ),
           ],
         ),
-        backgroundColor: Colors.white60,
+        backgroundColor: scaffoldBackgroundColor,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
-              //context.go('/main');
-              //context.pop();
             },
-            icon: const Icon(Icons.arrow_back)),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: iconColor,
+            )),
       ),
-      backgroundColor: Color.fromRGBO(32, 35, 41, 1),
+      backgroundColor: scaffoldBackgroundColor,
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
@@ -57,20 +63,21 @@ class _SettingsPageState extends State<SettingsPage> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Card(
-                color: Colors.grey.shade400,
+                color: cardBackgroundColor,
                 shadowColor: Colors.white24,
                 child: BlocBuilder<UnitCubit, bool>(
                   builder: (context, state) {
                     return SwitchListTile(
                       title: Text(
-                        'Receive values in °C',
+                        switchGradesTitle,
                         style: _titleTextStyle(),
                       ),
                       subtitle: Text(
-                          style: _subTitleTextStyle(),
-                          textAlign: TextAlign.left,
-                          'If it is activated, it receives the temperature values in degrees Celsius, otherwise it receives them in Fahrenheit.'),
-                      activeColor: Colors.white,
+                        switchGradeSubtitle,
+                        style: _subTitleTextStyle(),
+                        textAlign: TextAlign.left,
+                      ),
+                      activeColor: switchActivateColor,
                       value: unitValue,
                       onChanged: (value) {
                         unitValue = value;
@@ -85,19 +92,20 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Card(
                 elevation: 40,
-                color: Colors.grey.shade400,
-                shadowColor: Colors.white24,
+                color: cardBackgroundColor,
+                //shadowColor: Colors.white24,
                 child: BlocBuilder<OrderCubit, bool>(
                   builder: (context, state) {
                     return SwitchListTile(
                       title: Text(
-                        'Ascending/Descending',
+                        switchInvertDaysTitle,
                         style: _titleTextStyle(),
                       ),
                       subtitle: Text(
-                          style: _subTitleTextStyle(),
-                          'If you activate this option, you will see the forecast for the next few days in ascending or descending order.'),
-                      activeColor: Colors.white,
+                        style: _subTitleTextStyle(),
+                        switchInvertSubtitle,
+                      ),
+                      activeColor: switchActivateColor,
                       value: orderValue,
                       onChanged: (value) {
                         orderValue = value;
@@ -116,14 +124,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
   TextStyle _subTitleTextStyle() {
     return TextStyle(
-      color: Colors.white,
+      color: textTitleColor,
       fontSize: 14.sp,
     );
   }
 
   TextStyle _titleTextStyle() {
     return TextStyle(
-      color: Colors.white,
+      color: textTitleColor,
       fontWeight: FontWeight.bold,
       fontSize: 16.sp,
     );

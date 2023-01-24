@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/const/colors.dart';
 import 'package:weather_app/core/const/end_points.dart';
 import 'package:weather_app/core/utils/sun_data_converter.dart';
 import 'package:weather_app/features/current_weather/presentation/widgets/current_weather_variable_widget.dart';
 import 'package:sizer/sizer.dart';
+import 'package:weather_app/features/current_weather/presentation/widgets/texts_current_weather.dart';
 import 'package:weather_app/features/feth_location/domain/entities/geocoding/geo_coding_entity.dart';
 import 'package:weather_app/features/feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
 import '../../../../core/utils/utils.dart';
@@ -29,7 +31,7 @@ class CurrentWeatherMain extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10, left: 10, top: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(12),
-              color: const Color.fromRGBO(32, 35, 41, 1),
+              color: cardBackgroundColor,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.max,
@@ -57,7 +59,7 @@ class CurrentWeatherMain extends StatelessWidget {
                                     errorWidget: (context, url, error) {
                                       return Icon(
                                         Icons.image_not_supported_sharp,
-                                        color: Colors.red,
+                                        color: iconErrorColor,
                                         size: 10.w,
                                       );
                                     },
@@ -72,7 +74,7 @@ class CurrentWeatherMain extends StatelessWidget {
                                   '${state.name} \n${state.state ?? ''}',
                                   style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
-                                    color: Colors.white,
+                                    color: textTitleColor,
                                     fontSize: 15.sp,
                                   ),
                                   softWrap: false,
@@ -92,7 +94,7 @@ class CurrentWeatherMain extends StatelessWidget {
                               SunDataConverter.fromMillisecondsToString(
                                   currentWeatherModel.sys.sunrise),
                               style: TextStyle(
-                                color: Colors.white,
+                                color: textTitleColor,
                                 fontSize: 16.sp,
                               ),
                             ),
@@ -107,7 +109,7 @@ class CurrentWeatherMain extends StatelessWidget {
                               SunDataConverter.fromMillisecondsToString(
                                   currentWeatherModel.sys.sunset),
                               style: TextStyle(
-                                color: Colors.white,
+                                color: textTitleColor,
                                 fontSize: 16.sp,
                               ),
                             ),
@@ -132,7 +134,7 @@ class CurrentWeatherMain extends StatelessWidget {
                                           .convertTemperatureToFahrenheit(
                                               currentWeatherModel.main.temp),
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: textTitleColor,
                                     fontSize: 30.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -155,7 +157,7 @@ class CurrentWeatherMain extends StatelessWidget {
                           softWrap: false,
                           style: TextStyle(
                             overflow: TextOverflow.ellipsis,
-                            color: const Color.fromARGB(255, 200, 200, 201),
+                            color: cardSubtitleColor,
                             fontWeight: FontWeight.bold,
                             fontSize: 16.sp,
                           ),
@@ -168,19 +170,19 @@ class CurrentWeatherMain extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.alarm_rounded,
-                              color: Colors.white,
+                              color: textTitleColor,
                               size: 2.h,
                             ),
                             SizedBox(
                               width: 2.w,
                             ),
                             Text(
-                              'All times are in your local time',
+                              timeZoneMessage,
                               textAlign: TextAlign.end,
                               softWrap: false,
                               style: TextStyle(
                                 overflow: TextOverflow.ellipsis,
-                                color: Colors.white70,
+                                color: cardSubtitleColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 10.sp,
                               ),
@@ -201,7 +203,7 @@ class CurrentWeatherMain extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 10, top: 10),
             decoration: BoxDecoration(
               borderRadius: BorderRadiusDirectional.circular(12),
-              color: const Color.fromRGBO(32, 35, 41, 1),
+              color: cardBackgroundColor,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

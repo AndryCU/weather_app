@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/core/const/colors.dart';
+import 'package:weather_app/core/const/end_points.dart';
 import 'package:weather_app/core/utils/utils.dart';
 import 'package:weather_app/features/five_days_weather/domain/entities/next_days_weather_main.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
@@ -30,10 +32,10 @@ class ExpandedListItem extends StatelessWidget {
         itemBuilder: (context, indexDay) {
           final dayName = results.keys.toList()[indexDay];
           return Card(
-            color: const Color.fromRGBO(32, 35, 41, 1),
+            color: cardBackgroundColor,
             child: ExpansionTile(
-              collapsedIconColor: Colors.white,
-              iconColor: Colors.white,
+              collapsedIconColor: textTitleColor,
+              iconColor: iconColor,
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -45,7 +47,7 @@ class ExpandedListItem extends StatelessWidget {
                         CustomDaysUtils.getNameDayOfWeek(dayName),
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: textTitleColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 16.sp,
                         ),
@@ -54,7 +56,7 @@ class ExpandedListItem extends StatelessWidget {
                         CustomDaysUtils.getDayOfMonth(dayName),
                         textAlign: TextAlign.start,
                         style: TextStyle(
-                          color: Colors.white,
+                          color: textTitleColor,
                           fontSize: 14.sp,
                         ),
                       ),
@@ -68,7 +70,7 @@ class ExpandedListItem extends StatelessWidget {
                             results[dayName]!.maxTemDay),
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: Colors.white,
+                      color: textTitleColor,
                     ),
                   ),
                   Text(
@@ -80,14 +82,14 @@ class ExpandedListItem extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w100,
                       fontSize: 16.sp,
-                      color: Colors.white,
+                      color: textTitleColor,
                     ),
                   ),
                 ],
               ),
               children: [
                 Container(
-                  color: const Color.fromRGBO(26, 28, 30, 0),
+                  color: cardBackgroundColor,
                   height: 25.h,
                   width: 95.w,
                   child: ListView.builder(
@@ -101,7 +103,7 @@ class ExpandedListItem extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Card(
-                          color: const Color.fromARGB(179, 128, 128, 128),
+                          color: cardInsideColor,
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Column(
@@ -113,19 +115,19 @@ class ExpandedListItem extends StatelessWidget {
                                       weatherEvery3Hours.dt),
                                   style: TextStyle(
                                     fontSize: 13.sp,
-                                    color: Colors.white,
+                                    color: textTitleColor,
                                   ),
                                 ),
                                 ClipRRect(
                                   borderRadius: BorderRadius.circular(12),
                                   child: CachedNetworkImage(
                                     imageUrl:
-                                        'https://openweathermap.org/img/wn/${weatherEvery3Hours.weather.first.icon}@2x.png',
+                                        '$baseUrlImagesOpenWeatherMap${weatherEvery3Hours.weather.first.icon}@2x.png',
                                     height: 10.h,
                                     errorWidget: (context, url, error) {
                                       return Icon(
                                         Icons.error,
-                                        color: Colors.red,
+                                        color: iconErrorColor,
                                         size: 7.w,
                                       );
                                     },
@@ -141,7 +143,7 @@ class ExpandedListItem extends StatelessWidget {
                                               weatherEvery3Hours.main.temp),
                                   style: TextStyle(
                                     fontSize: 13.sp,
-                                    color: Colors.white,
+                                    color: textTitleColor,
                                   ),
                                 ),
                               ],

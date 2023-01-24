@@ -30,16 +30,17 @@ class FetchLocationGpsBloc
         } catch (e) {
           emit(FetchLocationGpsError());
         }
-        if (position == null) {
-          emit(FetchLocationGpsError());
-        } else {
-          emit(FetchLocationGpsLoaded(position.latitude, position.longitude));
-        }
+        position == null
+            ? emit(FetchLocationGpsError())
+            : emit(
+                FetchLocationGpsLoaded(position.latitude, position.longitude));
       } else {
         if (!serviceStatus) {
           emit(FetchLocationGpsServiceError());
         } else {
-          emit(FetchLocationGpsPermissionError());
+          permissionStatus == LocationPermission.deniedForever
+              ? emit(FetchLocationGpsDenyForever())
+              : emit(FetchLocationGpsPermissionError(permissionStatus));
         }
       }
     });

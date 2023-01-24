@@ -9,6 +9,8 @@ abstract class FetchLocationGpsState extends Equatable {
 
 class FetchLocationGpsInitial extends FetchLocationGpsState {}
 
+class FetchLocationGpsDenyForever extends FetchLocationGpsState {}
+
 class FetchLocationGpsLoading extends FetchLocationGpsState {}
 
 class FetchLocationGpsLoaded extends FetchLocationGpsState {
@@ -23,4 +25,8 @@ class FetchLocationGpsError extends FetchLocationGpsState {}
 
 class FetchLocationGpsServiceError extends FetchLocationGpsState {}
 
-class FetchLocationGpsPermissionError extends FetchLocationGpsState {}
+class FetchLocationGpsPermissionError extends FetchLocationGpsState {
+  final LocationPermission type;
+
+  const FetchLocationGpsPermissionError(this.type);
+}

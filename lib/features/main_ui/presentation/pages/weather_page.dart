@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sizer/sizer.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:weather_app/core/utils/sun_data_converter.dart';
 import 'package:weather_app/features/fetch_location_gps/presentation/bloc/fetch_location_gps_bloc.dart';
-import 'package:weather_app/features/feth_location/data/repositories/geo_coding_repository_implementation.dart';
 import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
+import 'package:weather_app/features/main_ui/presentation/pages/texts_main_ui.dart';
 import 'package:weather_app/features/settings/presentation/pages/settings_page.dart';
 
+import '../../../../core/const/colors.dart';
 import '../../../current_weather/presentation/widgets/current_weather_main_widget.dart';
-import '../../../feth_location/domain/repositories/geo_coding_repository.dart';
 import '../../../feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
 import '../../../feth_location/presentation/widgets/text_field.dart';
 import '../../../five_days_weather/presentation/widgets/day_expanded_widget.dart';
@@ -38,7 +38,7 @@ class _WeatherPageState extends State<WeatherPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromRGBO(26, 28, 30, 0),
+      backgroundColor: scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.only(top: 4.0),
         child: SingleChildScrollView(
@@ -54,8 +54,8 @@ class _WeatherPageState extends State<WeatherPage> {
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
                       textAlign: TextAlign.center,
-                      'Weather App',
-                      style: TextStyle(fontSize: 30.sp, color: Colors.white),
+                      appTitle,
+                      style: TextStyle(fontSize: 30.sp, color: textTitleColor),
                     ),
                   ),
                   const Spacer(),
@@ -69,7 +69,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     },
                     icon: const Icon(
                       Icons.gps_fixed,
-                      color: Colors.white,
+                      color: iconColor,
                     ),
                   ),
                   IconButton(
@@ -82,7 +82,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     },
                     icon: const Icon(
                       Icons.settings,
-                      color: Colors.white,
+                      color: iconColor,
                     ),
                   )
                 ],
@@ -106,7 +106,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     return Container();
                   }
                   if (state is FetchLocationGpsLoading) {
-                    return _loadingWidget(message: 'Loading location...');
+                    return _loadingWidget(message: loadingLocationText);
                   }
                   if (state is FetchLocationGpsLoaded) {
                     BlocProvider.of<MainUiBloc>(context, listen: false)
@@ -119,15 +119,42 @@ class _WeatherPageState extends State<WeatherPage> {
 
                   if (state is FetchLocationGpsPermissionError) {
                     return _gpsServiceOrPermissionError(
-                        message:
-                            'Please, grand the permission of location to use this feature...',
+                        message: gpsPermissionError,
                         icon: Icons.location_disabled);
                   }
-
+                  if (state is FetchLocationGpsDenyForever) {
+                    return Center(
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.gps_off,
+                            color: iconColor,
+                            size: 25.w,
+                          ),
+                          SizedBox(
+                            width: 80.w,
+                            child: Text(
+                              gpsPermissionDenyForeverText,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: messagesColor,
+                                fontSize: 20.sp,
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                              onPressed: () async {
+                                await openAppSettings();
+                              },
+                              child: const Text(goAppSettingsScreen))
+                        ],
+                      ),
+                    );
+                  }
                   if (state is FetchLocationGpsServiceError) {
                     return _gpsServiceOrPermissionError(
                       icon: Icons.wrong_location,
-                      message: 'Please, enable location to use the GPS...',
+                      message: enableGpsText,
                     );
                   }
                   if (state is FetchLocationGpsError) {
@@ -145,7 +172,7 @@ class _WeatherPageState extends State<WeatherPage> {
               BlocBuilder<MainUiBloc, WeatherState>(
                 builder: (context, state) {
                   if (state is WeatherLoadingState) {
-                    return _loadingWidget(message: 'Loading weather...');
+                    return _loadingWidget(message: loadingWeather);
                   }
                   if (state is WeatherLoadedState) {
                     return Column(
@@ -163,7 +190,10 @@ class _WeatherPageState extends State<WeatherPage> {
                     return Center(
                       child: Text(
                         state.message,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: messagesColor,
+                          fontSize: 16.sp,
+                        ),
                       ),
                     );
                   }
@@ -184,7 +214,7 @@ class _WeatherPageState extends State<WeatherPage> {
         children: [
           Icon(
             icon,
-            color: Colors.white,
+            color: iconColor,
             size: 25.w,
           ),
           SizedBox(
@@ -193,7 +223,7 @@ class _WeatherPageState extends State<WeatherPage> {
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.white70,
+                color: messagesColor,
                 fontSize: 20.sp,
               ),
             ),
