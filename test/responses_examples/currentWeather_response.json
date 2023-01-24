@@ -1,0 +1,46 @@
+{
+    "coord": {
+        "lon": -82.359,
+        "lat": 23.1353
+    },
+    "weather": [
+        {
+            "id": 804,
+            "main": "Clouds",
+            "description": "overcast clouds",
+            "icon": "04n"
+        }
+    ],
+    "base": "stations",
+    "main": {
+        "temp": 19.22,
+        "feels_like": 19.34,
+        "temp_min": 19.22,
+        "temp_max": 19.22,
+        "pressure": 1018,
+        "humidity": 82,
+        "sea_level": 1018,
+        "grnd_level": 1016
+    },
+    "visibility": 10000,
+    "wind": {
+        "speed": 2.81,
+        "deg": 173,
+        "gust": 2.62
+    },
+    "clouds": {
+        "all": 98
+    },
+    "dt": 1674093475,
+    "sys": {
+        "type": 2,
+        "id": 47732,
+        "country": "CU",
+        "sunrise": 1674043954,
+        "sunset": 1674083197
+    },
+    "timezone": -18000,
+    "id": 3746183,
+    "name": "Centro Habana",
+    "cod": 200
+}

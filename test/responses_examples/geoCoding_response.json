@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Havana",
+        "local_names": {           
+            "de": "Havanna",
+            "gd": "Havana"
+        },
+        "lat": 23.135305,
+        "lon": -82.3589631,
+        "country": "CU",
+        "state": "Havana"
+    },
+    {
+        "name": "Havana",
+        "lat": 37.0923595,
+        "lon": -95.94282618847157,
+        "country": "US",
+        "state": "Kansas"
+    },
+    {
+        "name": "Havana",
+        "lat": 30.6255617,
+        "lon": -84.4153769,
+        "country": "US",
+        "state": "Florida"
+    },
+    {
+        "name": "Havana",
+        "local_names": {
+            "en": "Havana"
+        },
+        "lat": 45.95024,
+        "lon": -97.618988,
+        "country": "US",
+        "state": "North Dakota"
+    },
+    {
+        "name": "Havana",
+        "lat": 40.3014316,
+        "lon": -90.0633625,
+        "country": "US",
+        "state": "Illinois"
+    }
+]
