@@ -69,7 +69,7 @@ class CurrentWeatherMain extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  '${state.name}, \n${state.state ?? '${state.state}'}',
+                                  '${state.name} \n${state.state ?? ''}',
                                   style: TextStyle(
                                     overflow: TextOverflow.ellipsis,
                                     color: Colors.white,
