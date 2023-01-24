@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/core/const/colors.dart';
+import 'package:weather_app/features/main_ui/presentation/pages/texts_main_ui.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 
 import 'package:sizer/sizer.dart';
@@ -46,13 +47,93 @@ class _SettingsPageState extends State<SettingsPage> {
         ),
         backgroundColor: scaffoldBackgroundColor,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: iconColor,
-            )),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back,
+            color: iconColor,
+          ),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      backgroundColor: cardBackgroundColor,
+                      title: Text(
+                        '$appTitle v1.0.0',
+                        style: TextStyle(
+                          color: textTitleColor,
+                          fontSize: 13.sp,
+                        ),
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(
+                            width: 80.w,
+                            height: 10.h,
+                            child: ListTile(
+                              title: Text(
+                                animationText,
+                                style: TextStyle(
+                                  color: textTitleColor,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                              subtitle: Text(
+                                animationSource,
+                                style: TextStyle(
+                                  color: cardSubtitleColor,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 80.w,
+                            height: 10.h,
+                            child: ListTile(
+                              title: Text(
+                                iconText,
+                                style: TextStyle(
+                                  color: textTitleColor,
+                                  fontSize: 16.sp,
+                                ),
+                              ),
+                              subtitle: Text(
+                                iconSource,
+                                style: TextStyle(
+                                  color: cardSubtitleColor,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            closedButtonText,
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                );
+              },
+              icon: const Icon(Icons.info_outline))
+        ],
       ),
       backgroundColor: scaffoldBackgroundColor,
       resizeToAvoidBottomInset: false,

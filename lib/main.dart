@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:weather_app/core/routes.dart';
 import 'package:weather_app/features/fetch_location_gps/presentation/bloc/fetch_location_gps_bloc.dart';
 import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';

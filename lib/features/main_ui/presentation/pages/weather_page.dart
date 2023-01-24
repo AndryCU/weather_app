@@ -142,11 +142,17 @@ class _WeatherPageState extends State<WeatherPage> {
                               ),
                             ),
                           ),
-                          ElevatedButton(
-                              onPressed: () async {
-                                await openAppSettings();
-                              },
-                              child: const Text(goAppSettingsScreen))
+                          SizedBox(width: 1.w),
+                          FloatingActionButton(
+                            backgroundColor: cardBackgroundColor,
+                            onPressed: () async {
+                              await openAppSettings();
+                            },
+                            child: const Icon(
+                              Icons.arrow_forward_sharp,
+                              color: iconColor,
+                            ),
+                          )
                         ],
                       ),
                     );
@@ -158,11 +164,21 @@ class _WeatherPageState extends State<WeatherPage> {
                     );
                   }
                   if (state is FetchLocationGpsError) {
-                    return LottieBuilder.asset(
-                      'assets/39612-location-animation.json',
-                      fit: BoxFit.fill,
-                      height: 60.h,
-                      width: 80.w,
+                    return Column(
+                      children: [
+                        LottieBuilder.asset(
+                          'assets/39612-location-animation.json',
+                          fit: BoxFit.fill,
+                          height: 40.h,
+                        ),
+                        Text(
+                          'Location not found, try again',
+                          style: TextStyle(
+                            color: messagesColor,
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ],
                     );
                   }
                   return Container();
@@ -188,12 +204,19 @@ class _WeatherPageState extends State<WeatherPage> {
                   }
                   if (state is WeatherErrorState) {
                     return Center(
-                      child: Text(
-                        state.message,
-                        style: TextStyle(
-                          color: messagesColor,
-                          fontSize: 16.sp,
-                        ),
+                      child: Column(
+                        children: [
+                          LottieBuilder.asset(
+                            'assets/failure-error-icon.json',
+                          ),
+                          Text(
+                            state.message,
+                            style: TextStyle(
+                              color: messagesColor,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }
