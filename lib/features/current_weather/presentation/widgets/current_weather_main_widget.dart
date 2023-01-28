@@ -119,13 +119,13 @@ class CurrentWeatherMain extends StatelessWidget {
                             ),
                           ],
                         ),
-                        BlocBuilder<UnitCubit, bool>(
-                          builder: (context, state) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            BlocBuilder<UnitCubit, bool>(
+                              builder: (context, state) {
+                                return Text(
                                   state
                                       ? TemperatureHelper
                                           .convertTemperatureToCelsius(
@@ -138,18 +138,18 @@ class CurrentWeatherMain extends StatelessWidget {
                                     fontSize: 30.sp,
                                     fontWeight: FontWeight.bold,
                                   ),
-                                ),
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: CachedNetworkImage(
-                                    imageUrl:
-                                        '$baseUrlImagesOpenWeatherMap${currentWeatherModel.weather.first.icon}@2x.png',
-                                    width: 25.w,
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
+                                );
+                              },
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: CachedNetworkImage(
+                                imageUrl:
+                                    '$baseUrlImagesOpenWeatherMap${currentWeatherModel.weather.first.icon}@2x.png',
+                                width: 25.w,
+                              ),
+                            ),
+                          ],
                         ),
                         Text(
                           '${currentWeatherModel.weather.first.main}, \n${currentWeatherModel.weather.first.description}',

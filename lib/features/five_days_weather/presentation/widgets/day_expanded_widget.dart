@@ -15,7 +15,6 @@ class ExpandedListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final unit = context.watch<UnitCubit>().state;
     final results =
         CustomDaysUtils.getDaysSeparated(list: weatherByDaysMainEntity.list);
     return Padding(
@@ -62,28 +61,38 @@ class ExpandedListItem extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    unit
-                        ? TemperatureHelper.convertTemperatureToCelsius(
-                            results[dayName]!.maxTemDay)
-                        : TemperatureHelper.convertTemperatureToFahrenheit(
-                            results[dayName]!.maxTemDay),
-                    style: TextStyle(
-                      fontSize: 15.sp,
-                      color: textTitleColor,
-                    ),
-                  ),
-                  Text(
-                    unit
-                        ? TemperatureHelper.convertTemperatureToCelsius(
-                            results[dayName]!.minTempDay)
-                        : TemperatureHelper.convertTemperatureToFahrenheit(
-                            results[dayName]!.minTempDay),
-                    style: TextStyle(
-                      fontWeight: FontWeight.w100,
-                      fontSize: 16.sp,
-                      color: textTitleColor,
-                    ),
+                  BlocBuilder<UnitCubit, bool>(
+                    builder: (context, state) {
+                      return Column(
+                        children: [
+                          Text(
+                            state
+                                ? TemperatureHelper.convertTemperatureToCelsius(
+                                    results[dayName]!.maxTemDay)
+                                : TemperatureHelper
+                                    .convertTemperatureToFahrenheit(
+                                        results[dayName]!.maxTemDay),
+                            style: TextStyle(
+                              fontSize: 15.sp,
+                              color: textTitleColor,
+                            ),
+                          ),
+                          Text(
+                            state
+                                ? TemperatureHelper.convertTemperatureToCelsius(
+                                    results[dayName]!.minTempDay)
+                                : TemperatureHelper
+                                    .convertTemperatureToFahrenheit(
+                                        results[dayName]!.minTempDay),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w100,
+                              fontSize: 16.sp,
+                              color: textTitleColor,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),
@@ -133,18 +142,22 @@ class ExpandedListItem extends StatelessWidget {
                                     },
                                   ),
                                 ),
-                                Text(
-                                  unit
-                                      ? TemperatureHelper
-                                          .convertTemperatureToCelsius(
-                                              weatherEvery3Hours.main.temp)
-                                      : TemperatureHelper
-                                          .convertTemperatureToFahrenheit(
-                                              weatherEvery3Hours.main.temp),
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                    color: textTitleColor,
-                                  ),
+                                BlocBuilder<UnitCubit, bool>(
+                                  builder: (context, state) {
+                                    return Text(
+                                      state
+                                          ? TemperatureHelper
+                                              .convertTemperatureToCelsius(
+                                                  weatherEvery3Hours.main.temp)
+                                          : TemperatureHelper
+                                              .convertTemperatureToFahrenheit(
+                                                  weatherEvery3Hours.main.temp),
+                                      style: TextStyle(
+                                        fontSize: 13.sp,
+                                        color: textTitleColor,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ],
                             ),
