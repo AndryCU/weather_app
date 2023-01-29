@@ -5,10 +5,7 @@ import '../const/end_points.dart';
 
 class ApiHandler {
   ApiHandler();
-
-  ///This metodh returns the response of a spesific request
-  ///The [path] field is the EndPonit that we want to request
-  ///[queryParameters] decir que es
+  
   Future<http.Response> get(
       {required String path,
       required Map<String, String> queryParameters}) async {
