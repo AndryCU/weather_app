@@ -14,7 +14,7 @@ import '../../../../injection/locator.dart';
 import '../../../main_ui/presentation/bloc/main_ui_bloc.dart';
 import '../../domain/entities/geocoding/geo_coding_entity.dart';
 import '../../domain/usecases/geo_coding_list.dart';
-import 'text_feth_location.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TextFieldLocation extends StatelessWidget {
   final TextEditingController _typeAheadController = TextEditingController();
@@ -48,7 +48,7 @@ class TextFieldLocation extends StatelessWidget {
                 color: Colors.white30,
                 fontSize: 16.sp,
               ),
-              labelText: hideMessage,
+              labelText: AppLocalizations.of(context)!.hideMessage,
               labelStyle: TextStyle(
                 color: Colors.white30,
                 fontSize: 17.sp,
@@ -115,7 +115,7 @@ class TextFieldLocation extends StatelessWidget {
             }
             if (error is TimeoutException) {
               return Text(
-                tryAgainText,
+                AppLocalizations.of(context)!.tryAgainText,
                 style: TextStyle(
                   color: iconErrorColor,
                   fontSize: 15.sp,
@@ -124,7 +124,7 @@ class TextFieldLocation extends StatelessWidget {
               );
             }
             return Text(
-              '$generalError ${error.toString()}',
+              AppLocalizations.of(context)!.generalError(error.toString()),
               style: TextStyle(
                 color: Colors.red,
                 fontSize: 15.sp,
@@ -146,7 +146,7 @@ class TextFieldLocation extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                noLocationFound,
+                AppLocalizations.of(context)!.noLocationFound,
                 style: TextStyle(
                   fontSize: 15.sp,
                 ),

@@ -1,0 +1,39 @@
+{   
+    "appTitle":"WeatherApp",
+    "appVersion": "WeatherApp v{version}",
+    "@appVersion": {
+        "placeholders": {
+        "flutter": {
+            "type": "String",
+            "example": "x.x.x"
+            }
+        }
+      },
+    "appBarSettings":"Configuración",
+    "switchGradesTitle":"Recibir valores en °C",
+    "switchGradeSubtitle": "Si está activado, recibe los valores de temperatura en grados Celsius, en caso contrario los recibe en Fahrenheit.",
+    "switchInvertDaysTitle":"Ascendente/Descendente",
+    "switchInvertSubtitle":"Si activas esta opción, verás la previsión para los próximos días en orden ascendente o descendente.",
+    "loadingLocationText":"Buscando localización...",
+    "loadingWeather":"Cargando clima...",
+    "gpsPermissionError":"Por favor, conceda el permiso de localización para usas esta característica.",
+    "gpsPermissionDenyForeverText":"Por favor, vaya a la pantalla de configuración, conceda el permiso de localización e intente de nuevo.",
+    "goAppSettingsScreen":"Ir a la configuración de WeatherApp",
+    "enableGpsText":"Por favor, active la localización",
+    "animationText":"Animaciones",
+    "iconText":"Íconos",
+    "closedButtonText":"Cerrar",
+    "hideMessage":"Escriba la localización",
+    "tryAgainText":"Intente de nuevo",
+    "generalError":"Oops. Algo ha salido mal: {error}",
+    "@generalError": {
+        "placeholders": {
+        "flutter": {
+            "type": "String",
+            "example": "Exception"
+            }
+        }
+      },
+    "noLocationFound":"Oops. Localización no encontrada",
+    "timeZoneMessage":"Todas las horas y fechas son mostradas en su hora local"
+}

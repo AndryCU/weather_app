@@ -6,10 +6,10 @@ import 'package:weather_app/core/const/end_points.dart';
 import 'package:weather_app/core/utils/sun_data_converter.dart';
 import 'package:weather_app/features/current_weather/presentation/widgets/current_weather_variable_widget.dart';
 import 'package:sizer/sizer.dart';
-import 'package:weather_app/features/current_weather/presentation/widgets/texts_current_weather.dart';
 import 'package:weather_app/features/feth_location/domain/entities/geocoding/geo_coding_entity.dart';
 import 'package:weather_app/features/feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
 import '../../../../core/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../settings/presentation/cubit/settings_unit_cubit.dart';
 import '../../domain/entities/current_weather_entities.dart';
 
@@ -177,7 +177,7 @@ class CurrentWeatherMain extends StatelessWidget {
                               width: 2.w,
                             ),
                             Text(
-                              timeZoneMessage,
+                              AppLocalizations.of(context)!.timeZoneMessage,
                               textAlign: TextAlign.end,
                               softWrap: false,
                               style: TextStyle(

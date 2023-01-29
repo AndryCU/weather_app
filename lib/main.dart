@@ -14,6 +14,7 @@ import 'features/settings/presentation/cubit/settings_unit_cubit.dart';
 import 'injection/locator.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,22 +40,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (_) => UnitCubit()..getValue()),
-          BlocProvider(create: (_) => OrderCubit()..getValueOrder()),
-          BlocProvider(create: (_) => MainUiBloc()),
-          BlocProvider(create: (_) => FetchLocationGpsBloc()),
-          BlocProvider(create: (_) => GeoCodingModelSelectedCubit(null)),
-        ],
-        child: Sizer(builder: (context, orientation, deviceType) {
+      providers: [
+        BlocProvider(create: (_) => UnitCubit()..getValue()),
+        BlocProvider(create: (_) => OrderCubit()..getValueOrder()),
+        BlocProvider(create: (_) => MainUiBloc()),
+        BlocProvider(create: (_) => FetchLocationGpsBloc()),
+        BlocProvider(create: (_) => GeoCodingModelSelectedCubit(null)),
+      ],
+      child: Sizer(
+        builder: (context, orientation, deviceType) {
           return const MaterialApp(
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             debugShowCheckedModeBanner: false,
             home: SafeArea(child: WeatherPage()),
           );
-        }));
+        },
+      ),
+    );
   }
 }
-// MaterialApp.router(
-//         routerConfig: route,
-//         debugShowCheckedModeBanner: false,
-//       ),

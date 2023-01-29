@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/core/const/colors.dart';
-import 'package:weather_app/features/main_ui/presentation/pages/texts_main_ui.dart';
 import 'package:weather_app/features/settings/presentation/cubit/settings_order_cubit.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sizer/sizer.dart';
-import 'package:weather_app/features/settings/presentation/pages/text_settings.dart';
 import '../../../../injection/locator.dart';
 import '../cubit/settings_unit_cubit.dart';
 
@@ -37,10 +36,10 @@ class _SettingsPageState extends State<SettingsPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
-              appBarSettings,
+              AppLocalizations.of(context)!.appBarSettings,
               style: TextStyle(
                 color: textTitleColor,
-                fontSize: 30.sp,
+                fontSize: 20.sp,
               ),
             ),
           ],
@@ -64,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     return AlertDialog(
                       backgroundColor: cardBackgroundColor,
                       title: Text(
-                        '$appTitle v1.0.0',
+                        AppLocalizations.of(context)!.appVersion('1.0.0'),
                         style: TextStyle(
                           color: textTitleColor,
                           fontSize: 13.sp,
@@ -78,14 +77,14 @@ class _SettingsPageState extends State<SettingsPage> {
                             height: 10.h,
                             child: ListTile(
                               title: Text(
-                                animationText,
+                                AppLocalizations.of(context)!.animationText,
                                 style: TextStyle(
                                   color: textTitleColor,
                                   fontSize: 16.sp,
                                 ),
                               ),
                               subtitle: Text(
-                                animationSource,
+                                'https://lottiefiles.com/',
                                 style: TextStyle(
                                   color: cardSubtitleColor,
                                   fontSize: 14.sp,
@@ -98,14 +97,14 @@ class _SettingsPageState extends State<SettingsPage> {
                             height: 10.h,
                             child: ListTile(
                               title: Text(
-                                iconText,
+                                AppLocalizations.of(context)!.iconText,
                                 style: TextStyle(
                                   color: textTitleColor,
                                   fontSize: 16.sp,
                                 ),
                               ),
                               subtitle: Text(
-                                iconSource,
+                                'https://www.flaticon.com/free-icons/sunset',
                                 style: TextStyle(
                                   color: cardSubtitleColor,
                                   fontSize: 14.sp,
@@ -121,7 +120,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                            closedButtonText,
+                            AppLocalizations.of(context)!.closedButtonText,
                             style: TextStyle(
                               fontSize: 12.sp,
                             ),
@@ -150,11 +149,11 @@ class _SettingsPageState extends State<SettingsPage> {
                   builder: (context, state) {
                     return SwitchListTile(
                       title: Text(
-                        switchGradesTitle,
+                        AppLocalizations.of(context)!.switchGradesTitle,
                         style: _titleTextStyle(),
                       ),
                       subtitle: Text(
-                        switchGradeSubtitle,
+                        AppLocalizations.of(context)!.switchGradeSubtitle,
                         style: _subTitleTextStyle(),
                         textAlign: TextAlign.left,
                       ),
@@ -179,12 +178,12 @@ class _SettingsPageState extends State<SettingsPage> {
                   builder: (context, state) {
                     return SwitchListTile(
                       title: Text(
-                        switchInvertDaysTitle,
+                        AppLocalizations.of(context)!.switchInvertDaysTitle,
                         style: _titleTextStyle(),
                       ),
                       subtitle: Text(
                         style: _subTitleTextStyle(),
-                        switchInvertSubtitle,
+                        AppLocalizations.of(context)!.switchInvertSubtitle,
                       ),
                       activeColor: switchActivateColor,
                       value: orderValue,
@@ -206,7 +205,7 @@ class _SettingsPageState extends State<SettingsPage> {
   TextStyle _subTitleTextStyle() {
     return TextStyle(
       color: textTitleColor,
-      fontSize: 14.sp,
+      fontSize: 13.sp,
     );
   }
 
@@ -214,7 +213,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return TextStyle(
       color: textTitleColor,
       fontWeight: FontWeight.bold,
-      fontSize: 16.sp,
+      fontSize: 15.sp,
     );
   }
 }

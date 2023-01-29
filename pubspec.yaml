@@ -37,6 +37,8 @@ dependencies:
   firebase_crashlytics: ^3.0.10
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   flutter_bloc: ^8.1.1
   flutter_launcher_icons: ^0.11.0
   flutter_typeahead: ^4.1.1
@@ -44,7 +46,7 @@ dependencies:
   geolocator: ^9.0.2
   get_it: ^7.2.0
   http: ^0.13.5
-  intl: ^0.18.0
+  intl: ^0.17.0
   json_annotation: ^4.7.0
   lottie: ^2.0.0
   permission_handler: ^10.2.0
@@ -73,6 +75,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/

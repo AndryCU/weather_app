@@ -6,9 +6,9 @@ import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:weather_app/features/fetch_location_gps/presentation/bloc/fetch_location_gps_bloc.dart';
 import 'package:weather_app/features/main_ui/presentation/bloc/main_ui_bloc.dart';
-import 'package:weather_app/features/main_ui/presentation/pages/texts_main_ui.dart';
 import 'package:weather_app/features/settings/presentation/pages/settings_page.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../core/const/colors.dart';
 import '../../../current_weather/presentation/widgets/current_weather_main_widget.dart';
 import '../../../feth_location/presentation/bloc/cubit/spesific_location_selected_cubit.dart';
@@ -24,13 +24,12 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  late bool unitValue, order_days;
+  late bool unitValue, orderDays;
   @override
   void initState() {
     unitValue =
         locator.get<SharedPreferences>().getBool('units_value') ?? false;
-    order_days =
-        locator.get<SharedPreferences>().getBool('order_days') ?? false;
+    orderDays = locator.get<SharedPreferences>().getBool('order_days') ?? false;
     super.initState();
   }
 
@@ -54,7 +53,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     padding: const EdgeInsets.only(left: 8),
                     child: Text(
                       textAlign: TextAlign.center,
-                      appTitle,
+                      AppLocalizations.of(context)!.appTitle,
                       style: TextStyle(fontSize: 30.sp, color: textTitleColor),
                     ),
                   ),
@@ -106,7 +105,9 @@ class _WeatherPageState extends State<WeatherPage> {
                     return Container();
                   }
                   if (state is FetchLocationGpsLoading) {
-                    return _loadingWidget(message: loadingLocationText);
+                    return _loadingWidget(
+                        message:
+                            AppLocalizations.of(context)!.loadingLocationText);
                   }
                   if (state is FetchLocationGpsLoaded) {
                     BlocProvider.of<MainUiBloc>(context, listen: false)
@@ -119,7 +120,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
                   if (state is FetchLocationGpsPermissionError) {
                     return _gpsServiceOrPermissionError(
-                        message: gpsPermissionError,
+                        message:
+                            AppLocalizations.of(context)!.gpsPermissionError,
                         icon: Icons.location_disabled);
                   }
                   if (state is FetchLocationGpsDenyForever) {
@@ -134,7 +136,8 @@ class _WeatherPageState extends State<WeatherPage> {
                           SizedBox(
                             width: 80.w,
                             child: Text(
-                              gpsPermissionDenyForeverText,
+                              AppLocalizations.of(context)!
+                                  .gpsPermissionDenyForeverText,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: messagesColor,
@@ -160,7 +163,7 @@ class _WeatherPageState extends State<WeatherPage> {
                   if (state is FetchLocationGpsServiceError) {
                     return _gpsServiceOrPermissionError(
                       icon: Icons.wrong_location,
-                      message: enableGpsText,
+                      message: AppLocalizations.of(context)!.enableGpsText,
                     );
                   }
                   if (state is FetchLocationGpsError) {
@@ -188,7 +191,8 @@ class _WeatherPageState extends State<WeatherPage> {
               BlocBuilder<MainUiBloc, WeatherState>(
                 builder: (context, state) {
                   if (state is WeatherLoadingState) {
-                    return _loadingWidget(message: loadingWeather);
+                    return _loadingWidget(
+                        message: AppLocalizations.of(context)!.loadingWeather);
                   }
                   if (state is WeatherLoadedState) {
                     return Column(

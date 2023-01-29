@@ -1,0 +1,40 @@
+{ 
+"appTitle":"WeatherApp",
+"appVersion": "WeatherApp v{version}",
+  "@appVersion": {
+    "placeholders": {
+      "flutter": {
+        "type": "String",
+        "example": "x.x.x"
+      }
+    }
+  },
+"appBarSettings": "Settings",
+"switchGradesTitle":"Receive values in °C",
+"switchGradeSubtitle":"If it is activated, it receives the temperature values in degrees Celsius, otherwise it receives them in Fahrenheit.",
+"switchInvertDaysTitle":"Ascending/Descending",
+"switchInvertSubtitle":"If you activate this option, you will see the forecast for the next few days in ascending or descending order.",
+"loadingLocationText":"Loading location...",
+"loadingWeather":"Loading weather...",
+"gpsPermissionError":"Please, grand the permission of location to use this feature...",
+"gpsPermissionDenyForeverText":"Please, go to settings app screen an grand the location permission, and, Try Again",
+ "goAppSettingsScreen":"Go to WeatherApp's settings",   
+"enableGpsText":"Please, enable location...",
+"animationText":"Animations",
+"iconText":"Icons",
+"closedButtonText":"Closed",
+"hideMessage":"Type here a location",
+"tryAgainText":"Try again",
+"generalError":"Oops. Something went wrong: {error}",
+    "@generalError": {
+        "placeholders": {
+        "flutter": {
+            "type": "String",
+            "example": "Exception"
+            }
+        }
+      },
+"noLocationFound":"Oops. No locations found",
+"timeZoneMessage":"All times are in your local time"
+
+}
